@@ -3513,3 +3513,44 @@ cameraRaw	Masking	Маскування
 	Quick Selection found nothing there	Швидке виділення нічого тут не знайшло
 	Object Selection found nothing there — try a tighter rectangle	Виділення об'єктів нічого тут не знайшло — спробуйте вужчий прямокутник
 	No subject found — try a rectangle around the object	Об'єкт не знайдено — спробуйте прямокутник навколо об'єкта
+	Subject (AI)	Об'єкт (ШІ)
+	Remove Background (AI)	Видалити фон (ШІ)
+	Select Subject (AI)	Виділити об'єкт (ШІ)
+	AI Models…	Моделі ШІ…
+	AI Models	Моделі ШІ
+	Model cache folder	Тека кешу моделей
+	Offline mode (never download models)	Автономний режим (ніколи не завантажувати моделі)
+	Use cloud provider instead of a local model	Використовувати хмарний сервіс замість локальної моделі
+	Cloud URL	URL хмари
+	BiRefNet-lite (best quality)	BiRefNet-lite (найкраща якість)
+	IS-Net (fast, low memory)	IS-Net (швидко, мало пам'яті)
+	Local model	Локальна модель
+	This build has no AI support.	Ця збірка не підтримує ШІ.
+	downloaded	завантажено
+	downloads on first use	завантажується під час першого використання
+	Folder: {path}	Тека: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	«Авто» використовує BiRefNet-lite або IS-Net, якщо вільно менше приблизно 7 ГБ пам'яті.
+	Cloud API key	Ключ API хмари
+	A key is stored	Ключ збережено
+	Paste the key	Вставте ключ
+	Save Key	Зберегти ключ
+	Key saved.	Ключ збережено.
+	Remove Key	Видалити ключ
+	Key removed.	Ключ видалено.
+	Stored outside the preferences in an owner-only file: {path}	Зберігається поза налаштуваннями, у файлі, доступному лише власнику: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Буде використано модель ШІ {model}, якої ще немає на цьому комп'ютері.
+	Download size: {size}	Розмір завантаження: {size}
+	License: {license}	Ліцензія: {license}
+	View license	Переглянути ліцензію
+	Saved to: {path}	Зберігається в: {path}
+	The model runs on this computer; your images are not uploaded.	Модель працює на цьому комп'ютері; зображення нікуди не надсилаються.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Модель, теку кешу й автономний режим можна вибрати в Налаштування › Моделі ШІ.
+	Missing command	Немає команди
+	Invalid command	Неприпустима команда
+	Download	Завантажити
+	Downloading AI model	Завантаження моделі ШІ
+	Loading AI model	Відкриття моделі ШІ
+	Running AI model	Робота моделі ШІ
+	Building mask	Створення маски
+	Reading pixels	Читання пікселів
+	Refining edge	Уточнення краю

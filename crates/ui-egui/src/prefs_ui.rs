@@ -899,6 +899,10 @@ fn humanize(key: &str) -> String {
         "appearanceMode" => return "Appearance Mode".into(),
         "darkTheme" => return "Dark Theme".into(),
         "lightTheme" => return "Light Theme".into(),
+        "cloudUrl" => return "Cloud URL".into(),
+        "cacheFolder" => return "Model cache folder".into(),
+        "offlineMode" => return "Offline mode (never download models)".into(),
+        "useCloudProvider" => return "Use cloud provider instead of a local model".into(),
         _ => {}
     }
     // These controls appear only for WebP, so reuse the existing translated labels.
@@ -943,6 +947,8 @@ fn choice_label(v: &str) -> String {
         "metal" => "Metal".into(),
         "gl" => "OpenGL".into(),
         "cpu" => "CPU (no GPU acceleration)".into(),
+        "birefnetLite" => "BiRefNet-lite (best quality)".into(),
+        "isnet" => "IS-Net (fast, low memory)".into(),
         v => humanize(v),
     }
 }
@@ -1034,6 +1040,9 @@ fn prefs_body(ui: &mut egui::Ui, f: &mut Map<String, Value>, system: Option<egui
                     if section == "performance" {
                         gpu_status_rows(ui, f.get("__gpuInfo"), obj);
                     }
+                    if section == "ai" {
+                        ai_rows(ui, obj);
+                    }
                     ui.add_space(8.0);
                 }
                 if has_visible_fields(&values, &section)
@@ -1072,6 +1081,94 @@ fn gpu_status_rows(ui: &mut egui::Ui, info: Option<&Value>, obj: &mut Map<String
         });
     });
 }
+
+/// Preferences › AI Models: what the chosen model downloads (size, license, cached or not) and the
+/// cloud API key. The key never goes into the preferences JSON: Save writes it straight to an
+/// owner-only file (`photocraft_ml::secrets`), so Cancel doesn't undo a saved key.
+fn ai_rows(ui: &mut egui::Ui, obj: &Map<String, Value>) {
+    let t = Tokens::get(ui.ctx());
+    let s = |k: &str| obj.get(k).and_then(Value::as_str).unwrap_or_default();
+    let model = prefs::AiModel::parse(s("model")).unwrap_or_default().registry_id();
+    ui.add_space(10.0);
+    ui.label(RichText::new(tl!("Local model")).font(crate::theme::semibold(12.5)).color(t.text));
+    if !(photocraft_ml::HAS_LOCAL || photocraft_ml::HAS_REMOTE) {
+        ui.label(RichText::new(tl!("This build has no AI support.")).color(t.text_faint));
+    }
+    match photocraft_ml::model_status(Some(model), Some(s("cacheFolder"))) {
+        Ok(st) => {
+            let size = crate::ai_prompt::size_label(st.spec.bytes);
+            let state = if st.downloaded { tl!("downloaded") } else { tl!("downloads on first use") };
+            ui.horizontal_wrapped(|ui| {
+                ui.label(RichText::new(format!("{} · {size} · {state} · ", st.spec.label)).color(t.text_dim));
+                ui.hyperlink_to(st.spec.license, st.spec.license_url);
+            });
+            if let Some(p) = st.path.and_then(|p| p.parent().map(|d| d.display().to_string())) {
+                ui.label(RichText::new(crate::i18n::fmt(tl!("Folder: {path}"), &[("path", &p)])).color(t.text_faint).size(11.5));
+            }
+            if model == "auto" {
+                ui.label(RichText::new(tl!("Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.")).color(t.text_faint).size(11.5));
+            }
+        }
+        Err(e) => {
+            ui.label(RichText::new(e.to_string()).color(t.text_faint));
+        }
+    }
+    cloud_key_rows(ui);
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn cloud_key_rows(ui: &mut egui::Ui) {
+    use photocraft_ml::secrets;
+    let t = Tokens::get(ui.ctx());
+    let id = egui::Id::new("prefs-ai-cloud-key");
+    let note_id = id.with("note");
+    let stored_id = id.with("stored");
+    ui.add_space(10.0);
+    ui.label(RichText::new(tl!("Cloud API key")).font(crate::theme::semibold(12.5)).color(t.text));
+    let mut stored = ui.data(|d| d.get_temp::<bool>(stored_id)).unwrap_or_else(secrets::has_cloud_key);
+    let mut text = ui.data(|d| d.get_temp::<String>(id)).unwrap_or_default();
+    let mut note: Option<String> = None;
+    ui.horizontal(|ui| {
+        let hint = if stored { tl!("A key is stored") } else { tl!("Paste the key") };
+        ui.add(egui::TextEdit::singleline(&mut text).password(true).hint_text(hint).desired_width(220.0));
+        if crate::widgets::secondary_button(ui, tl!("Save Key"), 80.0).clicked() && !text.trim().is_empty() {
+            note = Some(match secrets::set_cloud_key(&text) {
+                Ok(()) => {
+                    stored = true;
+                    text.clear();
+                    tl!("Key saved.").to_string()
+                }
+                Err(e) => e.to_string(),
+            });
+        }
+        if stored && crate::widgets::secondary_button(ui, tl!("Remove Key"), 90.0).clicked() {
+            note = Some(match secrets::clear_cloud_key() {
+                Ok(()) => {
+                    stored = secrets::has_cloud_key();
+                    tl!("Key removed.").to_string()
+                }
+                Err(e) => e.to_string(),
+            });
+        }
+    });
+    let path = secrets::cloud_key_path().map(|p| p.display().to_string()).unwrap_or_default();
+    ui.label(
+        RichText::new(crate::i18n::fmt(tl!("Stored outside the preferences in an owner-only file: {path}"), &[("path", &path)])).color(t.text_faint).size(11.5),
+    );
+    ui.data_mut(|d| {
+        d.insert_temp(id, text);
+        d.insert_temp(stored_id, stored);
+        if let Some(n) = note {
+            d.insert_temp(note_id, n);
+        }
+    });
+    if let Some(n) = ui.data(|d| d.get_temp::<String>(note_id)) {
+        ui.label(RichText::new(n).color(t.text_dim));
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+fn cloud_key_rows(_: &mut egui::Ui) {}
 
 /// One user-facing choice; legacy flags remain compatible with older settings.
 fn rendering_mode_row(ui: &mut egui::Ui, obj: &mut Map<String, Value>) {

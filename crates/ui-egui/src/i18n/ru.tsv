@@ -2690,3 +2690,44 @@ fontWeight	Italic	Курсив
 	Missing delete command	Отсутствует команда удаления
 	Invalid delete command	Недопустимая команда удаления
 	Layer deleted, but confirmation preference could not be saved: {error}	Слой удалён, но не удалось сохранить настройку подтверждения: {error}
+	Subject (AI)	Объект (ИИ)
+	Remove Background (AI)	Удалить фон (ИИ)
+	Select Subject (AI)	Выбрать объект (ИИ)
+	AI Models…	Модели ИИ…
+	AI Models	Модели ИИ
+	Model cache folder	Папка кэша моделей
+	Offline mode (never download models)	Автономный режим (никогда не загружать модели)
+	Use cloud provider instead of a local model	Использовать облачный сервис вместо локальной модели
+	Cloud URL	URL облака
+	BiRefNet-lite (best quality)	BiRefNet-lite (лучшее качество)
+	IS-Net (fast, low memory)	IS-Net (быстро, мало памяти)
+	Local model	Локальная модель
+	This build has no AI support.	Эта сборка не поддерживает ИИ.
+	downloaded	загружена
+	downloads on first use	загружается при первом использовании
+	Folder: {path}	Папка: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	«Авто» использует BiRefNet-lite или IS-Net, если свободно меньше примерно 7 ГБ памяти.
+	Cloud API key	Ключ API облака
+	A key is stored	Ключ сохранён
+	Paste the key	Вставьте ключ
+	Save Key	Сохранить ключ
+	Key saved.	Ключ сохранён.
+	Remove Key	Удалить ключ
+	Key removed.	Ключ удалён.
+	Stored outside the preferences in an owner-only file: {path}	Хранится вне настроек, в файле, доступном только владельцу: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Будет использована модель ИИ {model}, которой ещё нет на этом компьютере.
+	Download size: {size}	Размер загрузки: {size}
+	License: {license}	Лицензия: {license}
+	View license	Открыть лицензию
+	Saved to: {path}	Сохраняется в: {path}
+	The model runs on this computer; your images are not uploaded.	Модель работает на этом компьютере; изображения никуда не отправляются.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Модель, папку кэша и автономный режим можно выбрать в Настройки › Модели ИИ.
+	Missing command	Нет команды
+	Invalid command	Недопустимая команда
+	Download	Загрузить
+	Downloading AI model	Загрузка модели ИИ
+	Loading AI model	Открытие модели ИИ
+	Running AI model	Работа модели ИИ
+	Building mask	Создание маски
+	Reading pixels	Чтение пикселей
+	Refining edge	Уточнение края

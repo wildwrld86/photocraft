@@ -2,7 +2,7 @@
 //! Apache-2.0), downloaded on first use into `PHOTOCRAFT_MODELS_DIR` / the user cache.
 //! Ignored by default (network); run with
 //! `cargo test -p photocraft-ml --features onnx --test onnx_smoke -- --ignored`.
-#![cfg(all(feature = "onnx", not(target_arch = "wasm32")))]
+#![cfg(all(feature = "onnx", not(target_arch = "wasm32"), not(all(target_os = "macos", target_arch = "x86_64"))))]
 
 use photocraft_ml::{NoProgress, Provider, RgbImage, backend};
 
@@ -17,7 +17,7 @@ fn u2netp_separates_a_disc_from_a_flat_background() {
         })
         .collect();
     let img = RgbImage::new(w, h, px).unwrap();
-    let b = backend(&Provider::Local { model: "u2netp".into(), allow_download: true }).unwrap();
+    let b = backend(&Provider::Local { model: "u2netp".into(), allow_download: true, models_dir: None }).unwrap();
     let m = b.matte(&img, &NoProgress).unwrap();
     assert_eq!((m.width, m.height, m.alpha.len()), (w, h, w * h));
     let center = m.alpha[90 * w + 120];

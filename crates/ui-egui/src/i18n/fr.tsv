@@ -2825,3 +2825,44 @@ fontWeight	Italic	Italique
 	Quick Selection found nothing there	La Sélection rapide n'a rien trouvé à cet endroit
 	Object Selection found nothing there — try a tighter rectangle	La Sélection d'objet n'a rien trouvé à cet endroit — essayez un rectangle plus serré
 	No subject found — try a rectangle around the object	Aucun sujet trouvé — essayez un rectangle autour de l'objet
+	Subject (AI)	Sujet (IA)
+	Remove Background (AI)	Supprimer l'arrière-plan (IA)
+	Select Subject (AI)	Sélectionner le sujet (IA)
+	AI Models…	Modèles d'IA…
+	AI Models	Modèles d'IA
+	Model cache folder	Dossier de cache des modèles
+	Offline mode (never download models)	Mode hors ligne (ne jamais télécharger de modèles)
+	Use cloud provider instead of a local model	Utiliser un service cloud au lieu d'un modèle local
+	Cloud URL	URL du cloud
+	BiRefNet-lite (best quality)	BiRefNet-lite (meilleure qualité)
+	IS-Net (fast, low memory)	IS-Net (rapide, peu de mémoire)
+	Local model	Modèle local
+	This build has no AI support.	Cette version ne prend pas en charge l'IA.
+	downloaded	téléchargé
+	downloads on first use	téléchargé à la première utilisation
+	Folder: {path}	Dossier : {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Auto utilise BiRefNet-lite, ou IS-Net quand il reste moins d'environ 7 Go de mémoire libre.
+	Cloud API key	Clé d'API du cloud
+	A key is stored	Une clé est enregistrée
+	Paste the key	Collez la clé
+	Save Key	Enregistrer la clé
+	Key saved.	Clé enregistrée.
+	Remove Key	Supprimer la clé
+	Key removed.	Clé supprimée.
+	Stored outside the preferences in an owner-only file: {path}	Stockée hors des préférences, dans un fichier réservé au propriétaire : {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Cette action utilise le modèle d'IA {model}, qui n'est pas encore sur cet ordinateur.
+	Download size: {size}	Taille du téléchargement : {size}
+	License: {license}	Licence : {license}
+	View license	Voir la licence
+	Saved to: {path}	Enregistré dans : {path}
+	The model runs on this computer; your images are not uploaded.	Le modèle s'exécute sur cet ordinateur ; vos images ne sont pas envoyées.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Choisissez le modèle, le dossier de cache ou le mode hors ligne dans Préférences › Modèles d'IA.
+	Missing command	Commande manquante
+	Invalid command	Commande non valide
+	Download	Télécharger
+	Downloading AI model	Téléchargement du modèle d'IA
+	Loading AI model	Chargement du modèle d'IA
+	Running AI model	Exécution du modèle d'IA
+	Building mask	Création du masque
+	Reading pixels	Lecture des pixels
+	Refining edge	Affinage du contour

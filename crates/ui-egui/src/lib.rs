@@ -19,6 +19,7 @@ pub mod adjust_dialog;
 pub mod adjust_editors;
 pub mod adjust_preview;
 pub mod adjust_ui;
+pub mod ai_prompt;
 mod alt_grab;
 pub mod analysis_ui;
 pub mod artboard_ui;
@@ -739,6 +740,9 @@ impl PhotocraftApp {
     /// Run an engine command, reporting errors in the status bar.
     pub fn run(&mut self, id: &str, params: Value) -> Result<Value, String> {
         if let Some(result) = delete_layer_prompt::intercept(self, id, &params) {
+            return result;
+        }
+        if let Some(result) = ai_prompt::intercept(self, id, &params) {
             return result;
         }
         // Automation input also gates every step a command runs on its behalf (`actions.play`).

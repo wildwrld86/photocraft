@@ -3426,3 +3426,44 @@ fontWeight	Italic	斜体
 	Quick Selection found nothing there	クイック選択ではそこに何も見つかりませんでした
 	Object Selection found nothing there — try a tighter rectangle	オブジェクト選択ではそこに何も見つかりませんでした — より狭い長方形で試してください
 	No subject found — try a rectangle around the object	被写体が見つかりません — オブジェクトを囲む長方形を試してください
+	Subject (AI)	被写体 (AI)
+	Remove Background (AI)	背景を削除 (AI)
+	Select Subject (AI)	被写体を選択 (AI)
+	AI Models…	AI モデル…
+	AI Models	AI モデル
+	Model cache folder	モデルのキャッシュフォルダー
+	Offline mode (never download models)	オフラインモード (モデルをダウンロードしない)
+	Use cloud provider instead of a local model	ローカルモデルの代わりにクラウドプロバイダーを使用
+	Cloud URL	クラウド URL
+	BiRefNet-lite (best quality)	BiRefNet-lite (最高画質)
+	IS-Net (fast, low memory)	IS-Net (高速・省メモリ)
+	Local model	ローカルモデル
+	This build has no AI support.	このビルドには AI 機能がありません。
+	downloaded	ダウンロード済み
+	downloads on first use	初回使用時にダウンロード
+	Folder: {path}	フォルダー: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	自動では BiRefNet-lite を使い、空きメモリが約 7 GB 未満のときは IS-Net を使います。
+	Cloud API key	クラウド API キー
+	A key is stored	キーが保存されています
+	Paste the key	キーを貼り付け
+	Save Key	キーを保存
+	Key saved.	キーを保存しました。
+	Remove Key	キーを削除
+	Key removed.	キーを削除しました。
+	Stored outside the preferences in an owner-only file: {path}	環境設定の外にある所有者専用ファイルに保存: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	AI モデル {model} を使用しますが、まだこのコンピューターにありません。
+	Download size: {size}	ダウンロードサイズ: {size}
+	License: {license}	ライセンス: {license}
+	View license	ライセンスを表示
+	Saved to: {path}	保存先: {path}
+	The model runs on this computer; your images are not uploaded.	モデルはこのコンピューター上で動作し、画像はアップロードされません。
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	モデル、キャッシュフォルダー、オフラインモードは 環境設定 › AI モデル で選べます。
+	Missing command	コマンドがありません
+	Invalid command	無効なコマンド
+	Download	ダウンロード
+	Downloading AI model	AI モデルをダウンロード中
+	Loading AI model	AI モデルを読み込み中
+	Running AI model	AI モデルを実行中
+	Building mask	マスクを作成中
+	Reading pixels	ピクセルを読み込み中
+	Refining edge	エッジを調整中

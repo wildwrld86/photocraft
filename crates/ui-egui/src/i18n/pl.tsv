@@ -3426,3 +3426,44 @@ cameraRaw	Roughness	Chropowatość
 	Quick Selection found nothing there	Szybkie zaznaczanie nic tam nie znalazło
 	Object Selection found nothing there — try a tighter rectangle	Zaznaczanie obiektu nic tam nie znalazło — spróbuj ciaśniejszego prostokąta
 	No subject found — try a rectangle around the object	Nie znaleziono obiektu — spróbuj prostokąta wokół obiektu
+	Subject (AI)	Obiekt główny (AI)
+	Remove Background (AI)	Usuń tło (AI)
+	Select Subject (AI)	Zaznacz obiekt główny (AI)
+	AI Models…	Modele AI…
+	AI Models	Modele AI
+	Model cache folder	Folder pamięci podręcznej modeli
+	Offline mode (never download models)	Tryb offline (nigdy nie pobieraj modeli)
+	Use cloud provider instead of a local model	Używaj usługi w chmurze zamiast modelu lokalnego
+	Cloud URL	URL chmury
+	BiRefNet-lite (best quality)	BiRefNet-lite (najlepsza jakość)
+	IS-Net (fast, low memory)	IS-Net (szybki, mało pamięci)
+	Local model	Model lokalny
+	This build has no AI support.	Ta kompilacja nie obsługuje AI.
+	downloaded	pobrany
+	downloads on first use	pobierany przy pierwszym użyciu
+	Folder: {path}	Folder: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Automatycznie używa BiRefNet-lite albo IS-Net, gdy wolnej pamięci jest mniej niż ok. 7 GB.
+	Cloud API key	Klucz API chmury
+	A key is stored	Klucz jest zapisany
+	Paste the key	Wklej klucz
+	Save Key	Zapisz klucz
+	Key saved.	Klucz zapisany.
+	Remove Key	Usuń klucz
+	Key removed.	Klucz usunięty.
+	Stored outside the preferences in an owner-only file: {path}	Przechowywany poza preferencjami, w pliku dostępnym tylko dla właściciela: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Zostanie użyty model AI {model}, którego nie ma jeszcze na tym komputerze.
+	Download size: {size}	Rozmiar pobierania: {size}
+	License: {license}	Licencja: {license}
+	View license	Pokaż licencję
+	Saved to: {path}	Zapisywany w: {path}
+	The model runs on this computer; your images are not uploaded.	Model działa na tym komputerze; Twoje obrazy nie są wysyłane.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Model, folder pamięci podręcznej lub tryb offline wybierzesz w Preferencje › Modele AI.
+	Missing command	Brak polecenia
+	Invalid command	Nieprawidłowe polecenie
+	Download	Pobierz
+	Downloading AI model	Pobieranie modelu AI
+	Loading AI model	Wczytywanie modelu AI
+	Running AI model	Uruchamianie modelu AI
+	Building mask	Tworzenie maski
+	Reading pixels	Odczyt pikseli
+	Refining edge	Dopracowywanie krawędzi

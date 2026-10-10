@@ -2445,3 +2445,44 @@ fontWeight	Italic	Kursiv
 	Quick Selection found nothing there	Die Schnellauswahl hat dort nichts gefunden
 	Object Selection found nothing there — try a tighter rectangle	Die Objektauswahl hat dort nichts gefunden — versuchen Sie ein engeres Rechteck
 	No subject found — try a rectangle around the object	Kein Motiv gefunden — versuchen Sie ein Rechteck um das Objekt
+	Subject (AI)	Motiv (KI)
+	Remove Background (AI)	Hintergrund entfernen (KI)
+	Select Subject (AI)	Motiv auswählen (KI)
+	AI Models…	KI-Modelle…
+	AI Models	KI-Modelle
+	Model cache folder	Modell-Cacheordner
+	Offline mode (never download models)	Offlinemodus (nie Modelle herunterladen)
+	Use cloud provider instead of a local model	Cloud-Anbieter statt eines lokalen Modells verwenden
+	Cloud URL	Cloud-URL
+	BiRefNet-lite (best quality)	BiRefNet-lite (beste Qualität)
+	IS-Net (fast, low memory)	IS-Net (schnell, wenig Speicher)
+	Local model	Lokales Modell
+	This build has no AI support.	Dieser Build hat keine KI-Unterstützung.
+	downloaded	heruntergeladen
+	downloads on first use	wird bei der ersten Verwendung heruntergeladen
+	Folder: {path}	Ordner: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Automatisch verwendet BiRefNet-lite oder IS-Net, wenn weniger als etwa 7 GB Arbeitsspeicher frei sind.
+	Cloud API key	Cloud-API-Schlüssel
+	A key is stored	Ein Schlüssel ist gespeichert
+	Paste the key	Schlüssel einfügen
+	Save Key	Schlüssel speichern
+	Key saved.	Schlüssel gespeichert.
+	Remove Key	Schlüssel entfernen
+	Key removed.	Schlüssel entfernt.
+	Stored outside the preferences in an owner-only file: {path}	Außerhalb der Voreinstellungen in einer nur für den Besitzer lesbaren Datei gespeichert: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Dies verwendet das KI-Modell {model}, das noch nicht auf diesem Computer ist.
+	Download size: {size}	Downloadgröße: {size}
+	License: {license}	Lizenz: {license}
+	View license	Lizenz anzeigen
+	Saved to: {path}	Gespeichert in: {path}
+	The model runs on this computer; your images are not uploaded.	Das Modell läuft auf diesem Computer; Ihre Bilder werden nicht hochgeladen.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Modell, Cacheordner oder Offlinemodus wählen Sie unter Voreinstellungen › KI-Modelle.
+	Missing command	Befehl fehlt
+	Invalid command	Ungültiger Befehl
+	Download	Herunterladen
+	Downloading AI model	KI-Modell wird heruntergeladen
+	Loading AI model	KI-Modell wird geladen
+	Running AI model	KI-Modell wird ausgeführt
+	Building mask	Maske wird erstellt
+	Reading pixels	Pixel werden gelesen
+	Refining edge	Kante wird verfeinert

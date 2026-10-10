@@ -3585,3 +3585,44 @@ cameraRaw	Whites	Witten
 	Quick Selection found nothing there	Snelle selectie heeft daar niets gevonden
 	Object Selection found nothing there — try a tighter rectangle	Objectselectie heeft daar niets gevonden — probeer een krappere rechthoek
 	No subject found — try a rectangle around the object	Geen onderwerp gevonden — probeer een rechthoek rond het object
+	Subject (AI)	Onderwerp (AI)
+	Remove Background (AI)	Achtergrond verwijderen (AI)
+	Select Subject (AI)	Onderwerp selecteren (AI)
+	AI Models…	AI-modellen…
+	AI Models	AI-modellen
+	Model cache folder	Cachemap voor modellen
+	Offline mode (never download models)	Offlinemodus (nooit modellen downloaden)
+	Use cloud provider instead of a local model	Cloudprovider gebruiken in plaats van een lokaal model
+	Cloud URL	Cloud-URL
+	BiRefNet-lite (best quality)	BiRefNet-lite (beste kwaliteit)
+	IS-Net (fast, low memory)	IS-Net (snel, weinig geheugen)
+	Local model	Lokaal model
+	This build has no AI support.	Deze build heeft geen AI-ondersteuning.
+	downloaded	gedownload
+	downloads on first use	wordt bij het eerste gebruik gedownload
+	Folder: {path}	Map: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Automatisch gebruikt BiRefNet-lite, of IS-Net als er minder dan ongeveer 7 GB geheugen vrij is.
+	Cloud API key	Cloud-API-sleutel
+	A key is stored	Er is een sleutel opgeslagen
+	Paste the key	Plak de sleutel
+	Save Key	Sleutel opslaan
+	Key saved.	Sleutel opgeslagen.
+	Remove Key	Sleutel verwijderen
+	Key removed.	Sleutel verwijderd.
+	Stored outside the preferences in an owner-only file: {path}	Opgeslagen buiten de voorkeuren, in een bestand dat alleen de eigenaar kan lezen: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Dit gebruikt het AI-model {model}, dat nog niet op deze computer staat.
+	Download size: {size}	Downloadgrootte: {size}
+	License: {license}	Licentie: {license}
+	View license	Licentie bekijken
+	Saved to: {path}	Opgeslagen in: {path}
+	The model runs on this computer; your images are not uploaded.	Het model draait op deze computer; je afbeeldingen worden niet geüpload.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Kies het model, de cachemap of de offlinemodus in Voorkeuren › AI-modellen.
+	Missing command	Opdracht ontbreekt
+	Invalid command	Ongeldige opdracht
+	Download	Downloaden
+	Downloading AI model	AI-model downloaden
+	Loading AI model	AI-model laden
+	Running AI model	AI-model uitvoeren
+	Building mask	Masker maken
+	Reading pixels	Pixels lezen
+	Refining edge	Rand verfijnen

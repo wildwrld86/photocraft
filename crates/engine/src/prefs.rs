@@ -856,6 +856,40 @@ impl Default for Integrations {
     }
 }
 
+choice!(
+    /// Preferences › AI Models › Model: which local model Remove Background (AI) and Select
+    /// Subject (AI) use. `auto` = BiRefNet-lite, or IS-Net when free memory is low.
+    AiModel { Auto = "auto", BirefnetLite = "birefnetLite", Isnet = "isnet" } default Auto
+);
+
+impl AiModel {
+    /// The `photocraft-ml` registry id (`"auto"` lets the ML layer decide).
+    pub fn registry_id(self) -> &'static str {
+        match self {
+            Self::Auto => "auto",
+            Self::BirefnetLite => "birefnet-lite",
+            Self::Isnet => "isnet",
+        }
+    }
+}
+
+/// Edit › Preferences › AI Models. The cloud API key is not stored here (preferences are readable
+/// with `prefs.get`): it lives in an owner-only file managed by `photocraft_ml::secrets`.
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct AiPrefs {
+    /// Local model for the AI commands.
+    pub model: AiModel,
+    /// Never download models (only cached ones run; the cloud provider still works).
+    pub offline_mode: bool,
+    /// Where downloaded models are kept; empty = the per-user cache folder.
+    pub cache_folder: String,
+    /// Send images to the cloud endpoint below instead of running a local model.
+    pub use_cloud_provider: bool,
+    /// Cloud endpoint (POST image/png → PNG matte).
+    pub cloud_url: String,
+}
+
 /// Edit › Menus: hidden items and item colours, by command id.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default, rename_all = "camelCase")]
@@ -896,6 +930,7 @@ pub struct Preferences {
     pub enhanced_controls: EnhancedControls,
     pub raw_defaults: RawDefaults,
     pub integrations: Integrations,
+    pub ai: AiPrefs,
     /// Edit › Keyboard Shortcuts: command id → shortcut (`Cmd+Shift+N` notation); an empty
     /// string removes the default shortcut.
     pub shortcuts: BTreeMap<String, String>,
@@ -923,7 +958,7 @@ pub struct Preferences {
 }
 
 /// Preferences dialog sections in Photoshop's order: (id, title).
-pub const SECTIONS: [(&str, &str); 18] = [
+pub const SECTIONS: [(&str, &str); 19] = [
     ("general", "General"),
     ("interface", "Interface"),
     ("workspace", "Workspace"),
@@ -942,6 +977,7 @@ pub const SECTIONS: [(&str, &str); 18] = [
     ("enhancedControls", "Enhanced Controls"),
     ("rawDefaults", "Camera Raw Defaults"),
     ("integrations", "Integrations"),
+    ("ai", "AI Models"),
 ];
 
 /// Preferences that nothing reads yet, so Edit › Preferences doesn't show them: a control that
@@ -1043,6 +1079,7 @@ pub fn choices(path: &str) -> Option<&'static [&'static str]> {
         "type.fontPreview" => FontPreview::NAMES,
         "rawDefaults.colorSpace" => RawColorSpace::NAMES,
         "rawDefaults.bitDepth" => RawDepth::NAMES,
+        "ai.model" => AiModel::NAMES,
         "rawDefaults.sharpenFor" => RawSharpen::NAMES,
         "performance.gpuBackend" => GpuBackend::NAMES,
         "performance.linuxDisplayServer" => LinuxDisplayServer::NAMES,
@@ -1858,6 +1895,7 @@ pub fn specs() -> Vec<CommandSpec> {
         section!("edit.preferences.enhancedControls", "Enhanced Controls…"),
         section!("edit.preferences.rawDefaults", "Camera Raw…"),
         section!("edit.preferences.integrations", "Integrations…"),
+        section!("edit.preferences.ai", "AI Models…"),
         spec!(
             "edit.keyboardShortcuts",
             "Keyboard Shortcuts…",

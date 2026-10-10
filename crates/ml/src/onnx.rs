@@ -2,6 +2,7 @@
 //! process, so a batch over many files loads each model once.
 
 use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, OnceLock, PoisonError};
 
 use ort::session::Session;
@@ -22,11 +23,11 @@ fn rt(e: impl std::fmt::Display) -> MlError {
     MlError::Runtime(e.to_string())
 }
 
-fn session(spec: &'static ModelSpec, allow_download: bool, progress: &dyn Progress) -> Result<Shared> {
+fn session(spec: &'static ModelSpec, dir: Option<&Path>, allow_download: bool, progress: &dyn Progress) -> Result<Shared> {
     if let Some(s) = cache().lock().unwrap_or_else(PoisonError::into_inner).get(spec.id) {
         return Ok(s.clone());
     }
-    let path = store::ensure(spec, allow_download, progress)?;
+    let path = store::ensure(spec, dir, allow_download, progress)?;
     progress.progress(0.5, "Loading AI model");
     let threads = std::thread::available_parallelism().map_or(4, |n| n.get());
     let s = Session::builder()
@@ -52,11 +53,12 @@ fn session(spec: &'static ModelSpec, allow_download: bool, progress: &dyn Progre
 pub struct OnnxBackend {
     spec: &'static ModelSpec,
     allow_download: bool,
+    dir: Option<PathBuf>,
 }
 
 impl OnnxBackend {
-    pub fn new(spec: &'static ModelSpec, allow_download: bool) -> Self {
-        Self { spec, allow_download }
+    pub fn new(spec: &'static ModelSpec, allow_download: bool, dir: Option<PathBuf>) -> Self {
+        Self { spec, allow_download, dir }
     }
 }
 
@@ -67,7 +69,7 @@ impl MattingBackend for OnnxBackend {
 
     fn matte(&self, img: &RgbImage, progress: &dyn Progress) -> Result<Matte> {
         let spec = self.spec;
-        let shared = session(spec, self.allow_download, progress)?;
+        let shared = session(spec, self.dir.as_deref(), self.allow_download, progress)?;
         if progress.cancelled() {
             return Err(MlError::Cancelled);
         }

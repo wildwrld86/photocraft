@@ -2984,3 +2984,44 @@ fontWeight	Italic	기울임
 	Quick Selection found nothing there	빠른 선택으로 해당 위치에서 아무것도 찾지 못했습니다
 	Object Selection found nothing there — try a tighter rectangle	개체 선택으로 해당 위치에서 아무것도 찾지 못했습니다 — 더 좁은 사각형을 사용해 보세요
 	No subject found — try a rectangle around the object	피사체를 찾을 수 없습니다 — 개체 주위에 사각형을 그려 보세요
+	Subject (AI)	피사체 (AI)
+	Remove Background (AI)	배경 제거 (AI)
+	Select Subject (AI)	피사체 선택 (AI)
+	AI Models…	AI 모델…
+	AI Models	AI 모델
+	Model cache folder	모델 캐시 폴더
+	Offline mode (never download models)	오프라인 모드 (모델을 다운로드하지 않음)
+	Use cloud provider instead of a local model	로컬 모델 대신 클라우드 제공자 사용
+	Cloud URL	클라우드 URL
+	BiRefNet-lite (best quality)	BiRefNet-lite (최고 품질)
+	IS-Net (fast, low memory)	IS-Net (빠름, 적은 메모리)
+	Local model	로컬 모델
+	This build has no AI support.	이 빌드는 AI를 지원하지 않습니다.
+	downloaded	다운로드됨
+	downloads on first use	처음 사용할 때 다운로드
+	Folder: {path}	폴더: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	자동은 BiRefNet-lite를 사용하며, 사용 가능한 메모리가 약 7GB 미만이면 IS-Net을 사용합니다.
+	Cloud API key	클라우드 API 키
+	A key is stored	키가 저장되어 있음
+	Paste the key	키 붙여넣기
+	Save Key	키 저장
+	Key saved.	키를 저장했습니다.
+	Remove Key	키 제거
+	Key removed.	키를 제거했습니다.
+	Stored outside the preferences in an owner-only file: {path}	환경 설정 밖의 소유자 전용 파일에 저장: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	AI 모델 {model}을(를) 사용하지만 아직 이 컴퓨터에 없습니다.
+	Download size: {size}	다운로드 크기: {size}
+	License: {license}	라이선스: {license}
+	View license	라이선스 보기
+	Saved to: {path}	저장 위치: {path}
+	The model runs on this computer; your images are not uploaded.	모델은 이 컴퓨터에서 실행되며 이미지는 업로드되지 않습니다.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	모델, 캐시 폴더, 오프라인 모드는 환경 설정 › AI 모델에서 선택하세요.
+	Missing command	명령 없음
+	Invalid command	잘못된 명령
+	Download	다운로드
+	Downloading AI model	AI 모델 다운로드 중
+	Loading AI model	AI 모델 불러오는 중
+	Running AI model	AI 모델 실행 중
+	Building mask	마스크 만드는 중
+	Reading pixels	픽셀 읽는 중
+	Refining edge	가장자리 다듬는 중

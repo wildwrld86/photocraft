@@ -3514,3 +3514,44 @@ fontWeight	Thin	Πολύ λεπτά
 	Quick Selection found nothing there	Η Γρήγορη επιλογή δεν βρήκε τίποτα εκεί
 	Object Selection found nothing there — try a tighter rectangle	Η Επιλογή αντικειμένου δεν βρήκε τίποτα εκεί — δοκιμάστε ένα πιο στενό ορθογώνιο
 	No subject found — try a rectangle around the object	Δεν βρέθηκε θέμα — δοκιμάστε ένα ορθογώνιο γύρω από το αντικείμενο
+	Subject (AI)	Θέμα (ΤΝ)
+	Remove Background (AI)	Αφαίρεση φόντου (ΤΝ)
+	Select Subject (AI)	Επιλογή κύριου θέματος (ΤΝ)
+	AI Models…	Μοντέλα ΤΝ…
+	AI Models	Μοντέλα ΤΝ
+	Model cache folder	Φάκελος προσωρινής μνήμης μοντέλων
+	Offline mode (never download models)	Λειτουργία εκτός σύνδεσης (καμία λήψη μοντέλων)
+	Use cloud provider instead of a local model	Χρήση υπηρεσίας cloud αντί για τοπικό μοντέλο
+	Cloud URL	URL cloud
+	BiRefNet-lite (best quality)	BiRefNet-lite (καλύτερη ποιότητα)
+	IS-Net (fast, low memory)	IS-Net (γρήγορο, λίγη μνήμη)
+	Local model	Τοπικό μοντέλο
+	This build has no AI support.	Αυτή η έκδοση δεν υποστηρίζει ΤΝ.
+	downloaded	έχει ληφθεί
+	downloads on first use	λαμβάνεται στην πρώτη χρήση
+	Folder: {path}	Φάκελος: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Το Αυτόματα χρησιμοποιεί το BiRefNet-lite ή το IS-Net όταν η ελεύθερη μνήμη είναι κάτω από περίπου 7 GB.
+	Cloud API key	Κλειδί API cloud
+	A key is stored	Υπάρχει αποθηκευμένο κλειδί
+	Paste the key	Επικολλήστε το κλειδί
+	Save Key	Αποθήκευση κλειδιού
+	Key saved.	Το κλειδί αποθηκεύτηκε.
+	Remove Key	Αφαίρεση κλειδιού
+	Key removed.	Το κλειδί αφαιρέθηκε.
+	Stored outside the preferences in an owner-only file: {path}	Αποθηκεύεται εκτός προτιμήσεων, σε αρχείο μόνο για τον κάτοχο: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Θα χρησιμοποιηθεί το μοντέλο ΤΝ {model}, που δεν υπάρχει ακόμη σε αυτόν τον υπολογιστή.
+	Download size: {size}	Μέγεθος λήψης: {size}
+	License: {license}	Άδεια: {license}
+	View license	Προβολή άδειας
+	Saved to: {path}	Αποθήκευση σε: {path}
+	The model runs on this computer; your images are not uploaded.	Το μοντέλο εκτελείται σε αυτόν τον υπολογιστή· οι εικόνες σας δεν αποστέλλονται.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Επιλέξτε μοντέλο, φάκελο προσωρινής μνήμης ή λειτουργία εκτός σύνδεσης στις Προτιμήσεις › Μοντέλα ΤΝ.
+	Missing command	Λείπει η εντολή
+	Invalid command	Μη έγκυρη εντολή
+	Download	Λήψη
+	Downloading AI model	Λήψη μοντέλου ΤΝ
+	Loading AI model	Φόρτωση μοντέλου ΤΝ
+	Running AI model	Εκτέλεση μοντέλου ΤΝ
+	Building mask	Δημιουργία μάσκας
+	Reading pixels	Ανάγνωση εικονοστοιχείων
+	Refining edge	Βελτίωση άκρης

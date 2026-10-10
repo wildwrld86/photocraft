@@ -17,6 +17,20 @@ JetBrains Mono font (assets/fonts/JetBrainsMono-Regular.ttf) — SIL Open Font L
 Lucide icons (assets/icons/*.svg, except slice-knife.svg) — ISC; icons derived from Feather also MIT. See assets/icons/LICENSE-lucide.txt.
 SCOWL English word list (assets/dict/en_US-scowl-50.txt.gz) — SCOWL license. See assets/dict/LICENSE-SCOWL.txt.
 
+AI features (desktop app and CLI built with the `ai` feature)
+
+ONNX Runtime 1.28.0 — Copyright (c) Microsoft Corporation — MIT License. Statically linked (prebuilt
+by pyke.io, pinned by SHA-256, see crates/ml/ORT_PINS.md). See crates/ml/licenses/LICENSE-onnxruntime.txt;
+its own third-party notices are in crates/ml/licenses/ThirdPartyNotices-onnxruntime.txt.
+ort / ort-sys 2.0.0-rc.13 (Rust bindings) — Copyright (c) 2023-2026 pyke.io, (c) 2020 Nicolas Bigaouette — MIT OR Apache-2.0.
+
+Model weights are not bundled: they are downloaded on first use, verified against pinned SHA-256
+hashes, and stay under their own licenses:
+BiRefNet and BiRefNet-lite (default model) — Copyright (c) 2024 ZhengPeng — MIT License. See crates/ml/licenses/LICENSE-BiRefNet.txt. ONNX export by onnx-community.
+IS-Net / DIS "isnet-general-use" — Xuebin Qin et al. — Apache License 2.0 (LICENSE-APACHE). ONNX export from the rembg project.
+U²-Net small (u2netp) — Xuebin Qin et al. — Apache License 2.0 (LICENSE-APACHE). ONNX export from the rembg project.
+MODNet — Zhanghan Ke et al. — Apache License 2.0 (LICENSE-APACHE). ONNX export by Xenova.
+
 Builds made with craft-fonts (CRAFT_FONTS_DIR; all official releases) also embed the fonts listed in
 https://github.com/storytold/craft-fonts/blob/main/ATTRIBUTION.md (today BIZ UDPGothic, Shippori Mincho and
 BIZ UDMincho; not the web build), under the SIL Open Font License 1.1. Their licence texts

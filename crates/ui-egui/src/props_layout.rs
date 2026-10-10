@@ -122,7 +122,12 @@ pub fn field_width(avail: f32, cols: usize, label_w: f32) -> f32 {
 /// subject selection, type layers its conversions, shapes and smart objects their own.
 pub fn quick_actions(content: &LayerContent) -> &'static [(&'static str, &'static str)] {
     match content {
-        LayerContent::Raster(_) => &[("Remove Background", "layer.removeBackground"), ("Select Subject", "select.subject")],
+        LayerContent::Raster(_) => &[
+            ("Remove Background", "layer.removeBackground"),
+            ("Select Subject", "select.subject"),
+            ("Remove Background (AI)", "layer.removeBackgroundAI"),
+            ("Select Subject (AI)", "select.subjectAI"),
+        ],
         LayerContent::Text(_) => &[
             ("Convert to Shape", "type.convertToShape"),
             ("Convert to Paragraph Text", "type.convertToParagraphText"),

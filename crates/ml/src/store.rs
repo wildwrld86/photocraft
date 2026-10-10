@@ -4,39 +4,16 @@
 
 use std::fs;
 use std::io::{Read, Write};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
 use crate::registry::ModelSpec;
-use crate::{MlError, Progress, Result};
-
-/// Model cache directory: `PHOTOCRAFT_MODELS_DIR`, else the platform cache dir
-/// (`$XDG_CACHE_HOME`/`~/.cache` on Linux, `~/Library/Caches` on macOS, `%LOCALAPPDATA%` on
-/// Windows) + `photocraft/models`.
-pub fn models_dir() -> Result<PathBuf> {
-    let env = |k: &str| std::env::var_os(k).filter(|v| !v.is_empty()).map(PathBuf::from);
-    if let Some(d) = env("PHOTOCRAFT_MODELS_DIR") {
-        return Ok(d);
-    }
-    let base = if cfg!(target_os = "windows") {
-        env("LOCALAPPDATA")
-    } else if cfg!(target_os = "macos") {
-        env("HOME").map(|h| h.join("Library/Caches"))
-    } else {
-        env("XDG_CACHE_HOME").or_else(|| env("HOME").map(|h| h.join(".cache")))
-    };
-    base.map(|b| b.join("photocraft").join("models")).ok_or_else(|| MlError::Download("no cache directory (set PHOTOCRAFT_MODELS_DIR)".into()))
-}
-
-/// Path where `spec` is (or will be) stored.
-pub fn model_path(spec: &ModelSpec) -> Result<PathBuf> {
-    Ok(models_dir()?.join(format!("{}-{}.onnx", spec.id, spec.sha256.get(..12).unwrap_or(spec.sha256))))
-}
+use crate::{MlError, Progress, Result, paths};
 
 /// Returns the local path of `spec`, downloading and verifying it first if needed.
-pub fn ensure(spec: &ModelSpec, allow_download: bool, progress: &dyn Progress) -> Result<PathBuf> {
-    let path = model_path(spec)?;
+pub fn ensure(spec: &ModelSpec, dir: Option<&Path>, allow_download: bool, progress: &dyn Progress) -> Result<PathBuf> {
+    let path = paths::model_path_in(&paths::models_dir(dir)?, spec);
     if fs::metadata(&path).is_ok_and(|m| m.len() == spec.bytes) {
         return Ok(path);
     }
@@ -55,7 +32,7 @@ pub fn ensure(spec: &ModelSpec, allow_download: bool, progress: &dyn Progress) -
     Ok(path)
 }
 
-fn download(spec: &ModelSpec, part: &std::path::Path, progress: &dyn Progress) -> Result<()> {
+fn download(spec: &ModelSpec, part: &Path, progress: &dyn Progress) -> Result<()> {
     let agent: ureq::Agent = ureq::Agent::config_builder().user_agent("Photocraft-dev").build().into();
     let resp = agent.get(spec.url).call().map_err(|e| MlError::Download(format!("{}: {e}", spec.url)))?;
     let mut reader = resp.into_body().into_reader();

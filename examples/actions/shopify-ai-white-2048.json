@@ -1,0 +1,10 @@
+{"actions":[
+  ["layer.removeBackgroundAI",{}],
+  ["layer.layerMask.apply",{}],
+  ["image.trim",{"basedOn":"transparent"}],
+  ["file.automate.fitImage",{"width":1741,"height":1741,"resample":"lanczos"}],
+  ["image.canvasSize",{"width":2048,"height":2048,"anchor":"center","extensionColor":"transparent"}],
+  ["layer.newFillLayer.solidColor",{"color":"#ffffff"}],
+  ["layer.arrange.sendToBack",{}],
+  ["layer.flattenImage",{}]
+]}

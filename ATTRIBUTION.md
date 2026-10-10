@@ -37,6 +37,23 @@ next to them.
 | `packaging/macos/dmg/` (all files) | PhotoCraft DMG window background and layout | @XusBadia, from the PhotoCraft app icon | Original work, see [`packaging/macos/dmg/README.md`](packaging/macos/dmg/README.md) | MIT OR Apache-2.0, like the code |
 | `crates/ui-egui/src/theme.rs` (Solarized Dark palette) | Solarized colour scheme used by the Solarized Dark theme | Ethan Schoonover | <https://ethanschoonover.com/solarized/> | MIT, [`LICENSE-solarized.txt`](crates/ui-egui/src/LICENSE-solarized.txt) |
 
+### AI runtime and models (`ai` feature; not files in this repo except the licence texts)
+
+ONNX Runtime is linked into builds with the `ai` feature (the desktop app and CLI by default); the
+models are downloaded on first use into the user's model cache, never committed or bundled. Every
+model in [`crates/ml/src/registry.rs`](crates/ml/src/registry.rs) must allow commercial use (a test
+enforces MIT or Apache-2.0).
+
+| Component | Version / pin | Author | Source | License |
+|---|---|---|---|---|
+| ONNX Runtime (statically linked) | 1.28.0, pyke prebuilt archive pinned by SHA-256 ([`crates/ml/ORT_PINS.md`](crates/ml/ORT_PINS.md)) | Microsoft Corporation | <https://github.com/microsoft/onnxruntime> | MIT, [`LICENSE-onnxruntime.txt`](crates/ml/licenses/LICENSE-onnxruntime.txt); bundled third-party notices in [`ThirdPartyNotices-onnxruntime.txt`](crates/ml/licenses/ThirdPartyNotices-onnxruntime.txt) |
+| `ort` / `ort-sys` Rust bindings | =2.0.0-rc.13 | pyke.io, Nicolas Bigaouette | <https://github.com/pykeio/ort> | MIT OR Apache-2.0 |
+| BiRefNet-lite (default model, `birefnet-lite`) | onnx-community/BiRefNet_lite-ONNX @ `de15b22b`, SHA-256 pinned | Peng Zheng et al.; ONNX export by onnx-community | <https://huggingface.co/ZhengPeng7/BiRefNet_lite> | MIT, [`LICENSE-BiRefNet.txt`](crates/ml/licenses/LICENSE-BiRefNet.txt) |
+| BiRefNet (`birefnet`) | onnx-community/BiRefNet-ONNX @ `534d3c82`, SHA-256 pinned | Peng Zheng et al.; ONNX export by onnx-community | <https://huggingface.co/ZhengPeng7/BiRefNet> | MIT, [`LICENSE-BiRefNet.txt`](crates/ml/licenses/LICENSE-BiRefNet.txt) |
+| IS-Net general use (`isnet`) | rembg release `isnet-general-use.onnx`, SHA-256 pinned | Xuebin Qin et al. (DIS); ONNX export by the rembg project | <https://github.com/xuebinqin/DIS> | Apache-2.0, [`LICENSE-APACHE`](LICENSE-APACHE) |
+| U²-Net small (`u2netp`) | rembg release `u2netp.onnx`, SHA-256 pinned | Xuebin Qin et al.; ONNX export by the rembg project | <https://github.com/xuebinqin/U-2-Net> | Apache-2.0, [`LICENSE-APACHE`](LICENSE-APACHE) |
+| MODNet (`modnet`, portraits) | Xenova/modnet @ `fa2fa546`, SHA-256 pinned | Zhanghan Ke et al.; ONNX export by Xenova | <https://github.com/ZHKKKe/MODNet> | Apache-2.0, [`LICENSE-APACHE`](LICENSE-APACHE) |
+
 ### Optional build input: craft-fonts (not files in this repo)
 
 Builds made with `CRAFT_FONTS_DIR` (all official releases) embed fonts from

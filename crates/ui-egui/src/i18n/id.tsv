@@ -2812,3 +2812,44 @@ fontWeight	Italic	Miring
 	Quick Selection found nothing there	Seleksi Cepat tidak menemukan apa pun di sana
 	Object Selection found nothing there — try a tighter rectangle	Seleksi Objek tidak menemukan apa pun di sana — coba persegi panjang yang lebih rapat
 	No subject found — try a rectangle around the object	Subjek tidak ditemukan — coba persegi panjang di sekitar objek
+	Subject (AI)	Subjek (AI)
+	Remove Background (AI)	Hapus Background (AI)
+	Select Subject (AI)	Pilih Subjek (AI)
+	AI Models…	Model AI…
+	AI Models	Model AI
+	Model cache folder	Folder cache model
+	Offline mode (never download models)	Mode offline (jangan pernah mengunduh model)
+	Use cloud provider instead of a local model	Gunakan penyedia cloud alih-alih model lokal
+	Cloud URL	URL cloud
+	BiRefNet-lite (best quality)	BiRefNet-lite (kualitas terbaik)
+	IS-Net (fast, low memory)	IS-Net (cepat, hemat memori)
+	Local model	Model lokal
+	This build has no AI support.	Build ini tidak mendukung AI.
+	downloaded	sudah diunduh
+	downloads on first use	diunduh saat pertama digunakan
+	Folder: {path}	Folder: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Otomatis memakai BiRefNet-lite, atau IS-Net bila memori kosong kurang dari sekitar 7 GB.
+	Cloud API key	Kunci API cloud
+	A key is stored	Kunci tersimpan
+	Paste the key	Tempel kunci
+	Save Key	Simpan Kunci
+	Key saved.	Kunci disimpan.
+	Remove Key	Hapus Kunci
+	Key removed.	Kunci dihapus.
+	Stored outside the preferences in an owner-only file: {path}	Disimpan di luar preferensi dalam file khusus pemilik: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Ini memakai model AI {model}, yang belum ada di komputer ini.
+	Download size: {size}	Ukuran unduhan: {size}
+	License: {license}	Lisensi: {license}
+	View license	Lihat lisensi
+	Saved to: {path}	Disimpan ke: {path}
+	The model runs on this computer; your images are not uploaded.	Model berjalan di komputer ini; gambar Anda tidak diunggah.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Pilih model, folder cache, atau mode offline di Preferensi › Model AI.
+	Missing command	Perintah tidak ada
+	Invalid command	Perintah tidak valid
+	Download	Unduh
+	Downloading AI model	Mengunduh model AI
+	Loading AI model	Memuat model AI
+	Running AI model	Menjalankan model AI
+	Building mask	Membuat mask
+	Reading pixels	Membaca piksel
+	Refining edge	Memperhalus tepi

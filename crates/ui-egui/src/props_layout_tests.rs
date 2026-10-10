@@ -67,6 +67,8 @@ fn quick_actions_fit_the_layer_kind() {
             "pixel" => {
                 assert!(all.contains(&"select.subject"));
                 assert!(all.contains(&"layer.removeBackground"));
+                assert!(all.contains(&"layer.removeBackgroundAI"));
+                assert!(all.contains(&"select.subjectAI"));
             }
             _ => assert!(!all.contains(&"select.subject"), "{kind}: Select Subject is for pixel layers"),
         }
@@ -116,6 +118,10 @@ fn pixel_layer_shows_remove_background_quick_action() {
     assert!(shown.contains(&"layer.removeBackground"), "{shown:?}");
     assert!(crate::menus::is_live("layer.removeBackground"));
     assert!(h.query_by_label("Remove Background").is_some());
+    // The AI actions show next to them whenever the build has a backend (the desktop app).
+    let ai = shown.contains(&"layer.removeBackgroundAI");
+    assert_eq!(ai, photocraft_ml::HAS_LOCAL || photocraft_ml::HAS_REMOTE, "{shown:?}");
+    assert_eq!(ai, shown.contains(&"select.subjectAI"));
 }
 
 #[test]

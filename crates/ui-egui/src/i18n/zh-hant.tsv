@@ -2383,3 +2383,44 @@ fontWeight	Italic	斜體
 	Quick Selection found nothing there	快速選取在該處找不到任何內容
 	Object Selection found nothing there — try a tighter rectangle	物件選取在該處找不到任何內容 — 請嘗試更緊密的矩形
 	No subject found — try a rectangle around the object	找不到主體 — 請嘗試在物件周圍繪製矩形
+	Subject (AI)	主體 (AI)
+	Remove Background (AI)	移除背景 (AI)
+	Select Subject (AI)	選取主體 (AI)
+	AI Models…	AI 模型…
+	AI Models	AI 模型
+	Model cache folder	模型快取資料夾
+	Offline mode (never download models)	離線模式（永不下載模型）
+	Use cloud provider instead of a local model	使用雲端服務而非本機模型
+	Cloud URL	雲端 URL
+	BiRefNet-lite (best quality)	BiRefNet-lite（最佳品質）
+	IS-Net (fast, low memory)	IS-Net（快速、低記憶體）
+	Local model	本機模型
+	This build has no AI support.	此版本不支援 AI。
+	downloaded	已下載
+	downloads on first use	首次使用時下載
+	Folder: {path}	資料夾：{path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	自動模式使用 BiRefNet-lite，可用記憶體少於約 7 GB 時改用 IS-Net。
+	Cloud API key	雲端 API 金鑰
+	A key is stored	已儲存金鑰
+	Paste the key	貼上金鑰
+	Save Key	儲存金鑰
+	Key saved.	金鑰已儲存。
+	Remove Key	移除金鑰
+	Key removed.	金鑰已移除。
+	Stored outside the preferences in an owner-only file: {path}	儲存在偏好設定之外、僅擁有者可讀的檔案中：{path}
+	This uses the AI model {model}, which isn't on this computer yet.	將使用 AI 模型 {model}，但它尚未在這台電腦上。
+	Download size: {size}	下載大小：{size}
+	License: {license}	授權：{license}
+	View license	檢視授權
+	Saved to: {path}	儲存至：{path}
+	The model runs on this computer; your images are not uploaded.	模型在這台電腦上執行；您的影像不會上傳。
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	在 偏好設定 › AI 模型 中選擇模型、快取資料夾或離線模式。
+	Missing command	缺少指令
+	Invalid command	無效的指令
+	Download	下載
+	Downloading AI model	正在下載 AI 模型
+	Loading AI model	正在載入 AI 模型
+	Running AI model	正在執行 AI 模型
+	Building mask	正在建立遮色片
+	Reading pixels	正在讀取像素
+	Refining edge	正在調整邊緣

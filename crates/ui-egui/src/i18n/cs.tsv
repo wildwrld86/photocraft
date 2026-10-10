@@ -2406,3 +2406,44 @@ fontWeight	Italic	Kurzíva
 	Quick Selection found nothing there	Rychlý výběr zde nic nenašel
 	Object Selection found nothing there — try a tighter rectangle	Výběr objektu zde nic nenašel — zkuste těsnější obdélník
 	No subject found — try a rectangle around the object	Nebyl nalezen žádný objekt — zkuste obdélník kolem objektu
+	Subject (AI)	Hlavní objekt (AI)
+	Remove Background (AI)	Odstranit pozadí (AI)
+	Select Subject (AI)	Vybrat hlavní objekt (AI)
+	AI Models…	Modely AI…
+	AI Models	Modely AI
+	Model cache folder	Složka mezipaměti modelů
+	Offline mode (never download models)	Režim offline (nikdy nestahovat modely)
+	Use cloud provider instead of a local model	Použít cloudovou službu místo místního modelu
+	Cloud URL	URL cloudu
+	BiRefNet-lite (best quality)	BiRefNet-lite (nejlepší kvalita)
+	IS-Net (fast, low memory)	IS-Net (rychlý, málo paměti)
+	Local model	Místní model
+	This build has no AI support.	Toto sestavení nepodporuje AI.
+	downloaded	staženo
+	downloads on first use	stáhne se při prvním použití
+	Folder: {path}	Složka: {path}
+	Auto uses BiRefNet-lite, or IS-Net when less than about 7 GB of memory is free.	Automaticky použije BiRefNet-lite, nebo IS-Net, když je volných méně než asi 7 GB paměti.
+	Cloud API key	Klíč API cloudu
+	A key is stored	Klíč je uložen
+	Paste the key	Vložte klíč
+	Save Key	Uložit klíč
+	Key saved.	Klíč uložen.
+	Remove Key	Odebrat klíč
+	Key removed.	Klíč odebrán.
+	Stored outside the preferences in an owner-only file: {path}	Uloženo mimo předvolby v souboru přístupném jen vlastníkovi: {path}
+	This uses the AI model {model}, which isn't on this computer yet.	Použije se model AI {model}, který v tomto počítači ještě není.
+	Download size: {size}	Velikost stahování: {size}
+	License: {license}	Licence: {license}
+	View license	Zobrazit licenci
+	Saved to: {path}	Uloží se do: {path}
+	The model runs on this computer; your images are not uploaded.	Model běží v tomto počítači; vaše obrázky se nikam neodesílají.
+	Choose the model, the cache folder or offline mode in Preferences › AI Models.	Model, složku mezipaměti nebo režim offline zvolíte v Předvolby › Modely AI.
+	Missing command	Chybí příkaz
+	Invalid command	Neplatný příkaz
+	Download	Stáhnout
+	Downloading AI model	Stahování modelu AI
+	Loading AI model	Načítání modelu AI
+	Running AI model	Spouštění modelu AI
+	Building mask	Vytváření masky
+	Reading pixels	Čtení pixelů
+	Refining edge	Zpřesňování okraje

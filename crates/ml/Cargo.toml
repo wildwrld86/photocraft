@@ -12,7 +12,7 @@ workspace = true
 default = []
 # Local inference with ONNX Runtime (statically linked prebuilt binaries fetched by ort-sys at
 # build time) plus first-use model download. Native only: never enable for wasm32.
-onnx = ["dep:ort", "download"]
+onnx = ["dep:ort", "dep:ort-sys", "download"]
 # A remote matting endpoint (bring-your-own API / self-hosted server).
 remote = ["dep:ureq", "dep:image"]
 # HTTPS model download with SHA-256 verification.
@@ -22,8 +22,26 @@ download = ["dep:ureq", "dep:sha2"]
 thiserror = { workspace = true }
 rayon = { workspace = true }
 
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+# ONNX Runtime 1.28.0, statically linked. ort-sys downloads pyke's prebuilt archive at build time
+# and verifies it against the SHA-256 table compiled into that exact ort-sys release, so pinning
+# ort and ort-sys with `=` pins the runtime bytes too (URLs and hashes: ORT_PINS.md; the
+# `ort_runtime_is_pinned` test fails if Cargo.lock drifts). Release builds can skip the CDN with
+# ORT_LIB_PATH pointing at a mirrored copy of the same archive.
+# Prebuilt archives exist for Linux x86_64/aarch64, Windows (x86_64/aarch64, DirectML builds) and
+# Apple-silicon macOS (CoreML builds); Intel macOS has none, so it builds without the local backend
+# (the cloud provider still works).
+[target.'cfg(all(not(target_arch = "wasm32"), not(all(target_os = "macos", target_arch = "x86_64"))))'.dependencies]
 ort = { version = "=2.0.0-rc.13", default-features = false, features = ["std", "download-binaries", "tls-rustls", "api-22"], optional = true }
+ort-sys = { version = "=2.0.0-rc.13", default-features = false, optional = true }
+
+# pyke ships only DirectML-enabled Windows archives and CoreML-enabled macOS ones; these features
+# select them (PhotoCraft still registers only the CPU execution provider).
+[target.'cfg(target_os = "windows")'.dependencies]
+ort = { version = "=2.0.0-rc.13", default-features = false, features = ["directml"], optional = true }
+[target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
+ort = { version = "=2.0.0-rc.13", default-features = false, features = ["coreml"], optional = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 ureq = { version = "3", default-features = false, features = ["rustls"], optional = true }
 sha2 = { version = "0.10", optional = true }
 image = { workspace = true, features = ["png"], optional = true }

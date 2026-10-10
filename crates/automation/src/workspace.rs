@@ -296,7 +296,9 @@ fn preference_uses_ambient_filesystem(path: &str) -> bool {
     // The engine skips empty segments (`.scriptEvents.enabled` sets `scriptEvents.enabled`), so
     // judge the first non-empty one; no segment at all is the whole-preferences update.
     let Some(section) = path.split('.').find(|segment| !segment.is_empty()) else { return true };
-    matches!(section, "colorSettings" | "scriptEvents" | "historyLog" | "plugIns" | "scratchDisks")
+    // `ai`: the model cache folder (downloads are written there) and the cloud URL (images, and
+    // the stored API key, go there) stay under the user's control.
+    matches!(section, "colorSettings" | "scriptEvents" | "historyLog" | "plugIns" | "scratchDisks" | "ai")
 }
 
 fn command_uses_ambient_path(id: &str, params: &Value) -> bool {
@@ -669,6 +671,9 @@ mod tests {
             ".historyLog.filePath",
             "plugIns.additionalPluginsFolder",
             "scratchDisks.disks",
+            "ai.cacheFolder",
+            "ai.cloudUrl",
+            ".ai.useCloudProvider",
             ".",
             "..historyLog.filePath",
         ] {
