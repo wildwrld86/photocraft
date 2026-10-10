@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Fork It Up placeholder icon (replace with final artwork) -->
+<rect x="16" y="16" width="480" height="480" rx="105" fill="#14121F"/>
+<g fill="#FF3D7F" transform="rotate(-20 256 256)">
+<rect x="191" y="70" width="22" height="130" rx="11"/><rect x="228" y="70" width="22" height="130" rx="11"/>
+<rect x="265" y="70" width="22" height="130" rx="11"/><rect x="302" y="70" width="22" height="130" rx="11"/>
+<rect x="191" y="180" width="133" height="50" rx="25"/><path d="M196 218 H319 L274 290 H241 Z"/>
+<rect x="238" y="280" width="40" height="190" rx="20"/></g></svg>

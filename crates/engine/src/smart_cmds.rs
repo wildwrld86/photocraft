@@ -45,7 +45,7 @@ pub struct SmartLink {
 /// PSD placed-layer keys that describe the smart object's source; stale once we change it.
 const PLACED_KEYS: [&[u8; 4]; 3] = [b"SoLd", b"PlLd", b"SoLE"];
 
-/// Command id of a Photoshop smart filter PhotoCraft does not implement (kept verbatim from PSD).
+/// Command id of a Photoshop smart filter Fork It Up does not implement (kept verbatim from PSD).
 pub use photocraft_io::smart_map::UNSUPPORTED_FILTER;
 
 fn other(msg: impl Into<String>) -> EngineError {
@@ -893,7 +893,7 @@ fn set_filter_params(s: &mut Session, p: &Value) -> Result<Value> {
         let i = filter_index(CMD, p, sm)?;
         let f = &mut sm.smart_filters[i];
         if f.command == photocraft_io::smart_map::UNSUPPORTED_FILTER {
-            return Err(bad(CMD, "this smart filter isn't implemented in PhotoCraft: it is kept as is (it can be hidden, moved or deleted)"));
+            return Err(bad(CMD, "this smart filter isn't implemented in Fork It Up: it is kept as is (it can be hidden, moved or deleted)"));
         }
         match (&mut f.params, new) {
             (Value::Object(old), Value::Object(n)) => old.extend(n),

@@ -1,6 +1,6 @@
-//! Sandboxed WebAssembly plug-ins for PhotoCraft.
+//! Sandboxed WebAssembly plug-ins for Fork It Up.
 //!
-//! A plug-in is a WebAssembly module that implements the PhotoCraft plug-in ABI (v1, documented
+//! A plug-in is a WebAssembly module that implements the Fork It Up plug-in ABI (v1, documented
 //! in `docs/plugins.md`). It runs in [`wasmi`], a pure-Rust interpreter, with:
 //!
 //! - **no host imports**: no WASI, file system, network, clock or randomness. A module that

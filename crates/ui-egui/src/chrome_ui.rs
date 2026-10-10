@@ -255,11 +255,11 @@ mod tests {
         assert_eq!(profile_name(&gray), "sGray (sRGB tone curve, Photocraft)");
 
         let mut custom = (*photocraft_engine::color_cmds::working_profile(photocraft_doc::ColorMode::Cmyk)).clone();
-        custom.description = "PhotoCraft Studio CMYK".into();
+        custom.description = "Fork It Up Studio CMYK".into();
         let mut custom_doc = doc();
         custom_doc.mode = photocraft_doc::ColorMode::Cmyk;
         custom_doc.icc_profile = Some(custom.with_encoded_bytes().to_bytes());
-        assert_eq!(profile_name(&custom_doc), "PhotoCraft Studio CMYK");
+        assert_eq!(profile_name(&custom_doc), "Fork It Up Studio CMYK");
     }
 
     #[test]

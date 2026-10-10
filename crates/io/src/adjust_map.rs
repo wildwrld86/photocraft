@@ -719,7 +719,7 @@ pub fn write(adj: &Adjustment) -> Vec<([u8; 4], Vec<u8>)> {
             // Photoshop requires the 17-byte Photo Filter payload after the version to be
             // padded to a 4-byte boundary INSIDE the tagged block's declared length.
             // A single pad byte made an 18-byte `phfl` block that Photoshop could not open
-            // even though PhotoCraft and other tolerant readers accepted it (#1455).
+            // even though Fork It Up and other tolerant readers accepted it (#1455).
             v.extend_from_slice(&[0, 0, 0]);
             return vec![(*b"phfl", v)];
         }
@@ -989,7 +989,7 @@ mod tests {
         assert_eq!(color, [1.0, 32768.0 / 65535.0, 0.0]);
         assert_eq!(density, 0.4);
         assert_eq!(write(&a)[0].1, v2, "version 2 RGB is written back byte-exact");
-        // Older PhotoCraft files used only one padding byte (18 bytes); keep importing them,
+        // Older Fork It Up files used only one padding byte (18 bytes); keep importing them,
         // but never produce that Photoshop-incompatible length again.
         assert_eq!(parse(b"phfl", &v2[..18], None, Channels::Rgb), a);
         for preserve_luminosity in [false, true] {

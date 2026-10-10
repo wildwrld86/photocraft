@@ -112,7 +112,7 @@ pub fn open(app: &mut PhotocraftApp, kind: Kind, layer: photocraft_doc::LayerId,
     let mut f = Map::new();
     f.insert(MARK.into(), json!(kind.key()));
     f.insert("__command".into(), json!(kind.command()));
-    f.insert("__label".into(), json!("PhotoCraft"));
+    f.insert("__label".into(), json!("Fork It Up"));
     f.insert("message".into(), json!(kind.message()));
     f.insert("layer".into(), json!(layer.0));
     f.insert("tool".into(), json!(format!("{tool:?}")));

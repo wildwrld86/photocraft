@@ -706,7 +706,7 @@ fn psd_text_fill_is_enabled_in_runs_and_new_default_styles() {
 #[test]
 fn psd_text_fill_is_enabled_after_editing_a_legacy_export() {
     use crate::engine_data::Value as E;
-    // A legacy PhotoCraft export has a normal style and character runs without FillFlag.
+    // A legacy Fork It Up export has a normal style and character runs without FillFlag.
     let mut t = point("Before", 40.0);
     let mut legacy = crate::psd::parse_tysh(&crate::psd::build_tysh(&t, 72.0, None)).unwrap();
     fn remove_fill_flags(value: &mut E) {

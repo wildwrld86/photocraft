@@ -3,7 +3,7 @@
 //! A thin wrapper around `heic-rs`, a pure-Rust HEVC still-picture decoder: single pictures and
 //! grid-tiled photos, 8- and 10-bit (10-bit decodes to 16-bit), alpha auxiliary images, ICC,
 //! EXIF and XMP. Its API is plain data ([`Info`], [`Decoded`], [`Error`]) so the crate knows
-//! nothing about the rest of PhotoCraft; `photocraft-codecs` adapts it behind its `heif` feature.
+//! nothing about the rest of Fork It Up; `photocraft-codecs` adapts it behind its `heif` feature.
 //!
 //! HEIF records orientation in the container (`irot`/`imir`, plus a `clap` crop), not in EXIF.
 //! [`Options::apply_transforms`] applies them; with it off, the pixels come back as coded.

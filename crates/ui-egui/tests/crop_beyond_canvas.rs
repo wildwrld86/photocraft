@@ -1,7 +1,7 @@
 //! Crop tool: while a frame is edited, the canvas shows the layers' pixels past its edges, as
 //! Photoshop's crop preview does.
 //!
-//! A crop with Delete Cropped Pixels off keeps what it cut away, but PhotoCraft drew only the
+//! A crop with Delete Cropped Pixels off keeps what it cut away, but Fork It Up drew only the
 //! canvas, so a frame couldn't be pulled back out over those pixels by eye. Photoshop (measured on
 //! 25.4) grows the view to every layer's bounds and the frame once the frame is pressed: the
 //! hidden pixels under the shield, transparency as the checkerboard, until ↵ or Esc.

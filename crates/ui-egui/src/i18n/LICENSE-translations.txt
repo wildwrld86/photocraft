@@ -1,21 +1,21 @@
-PhotoCraft's Korean, German, Brazilian Portuguese, Italian, Ukrainian and Dutch UI translation catalogs are
+Fork It Up's Korean, German, Brazilian Portuguese, Italian, Ukrainian and Dutch UI translation catalogs are
 licensed under MIT OR Apache-2.0, at your option. The full license texts are in ../../../../LICENSE-MIT
 and ../../../../LICENSE-APACHE.
 
-Korean translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+Korean translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.
 
-German translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+German translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.
 
-Brazilian Portuguese translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+Brazilian Portuguese translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.
 
-Italian translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+Italian translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.
 
-Ukrainian translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+Ukrainian translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.
 
-Dutch translations: PhotoCraft contributors, original translations of
-PhotoCraft's English labels; no proprietary translation resources were used.
+Dutch translations: Fork It Up contributors, original translations of
+Fork It Up's English labels; no proprietary translation resources were used.

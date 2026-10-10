@@ -21,7 +21,7 @@ pub fn thumb_badge(ui: &egui::Ui, l: &Layer, thumb: Rect) {
 }
 
 /// The display name of a smart filter (its command's label without the ellipsis). A Photoshop
-/// filter PhotoCraft doesn't implement shows its own name and is marked as kept as is.
+/// filter Fork It Up doesn't implement shows its own name and is marked as kept as is.
 fn filter_label(f: &photocraft_doc::SmartFilter) -> String {
     let command = f.command.as_str();
     if command == photocraft_engine::smart_cmds::UNSUPPORTED_FILTER {

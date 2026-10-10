@@ -16,7 +16,7 @@
 //! above `opacity` fully opaque, linear in between (`0` and `1` leave `a` as computed).
 //!
 //! The arithmetic runs on the stored channel values of the document (encoded, not linearised, at
-//! every depth). That is the space PhotoCraft's Normal blending composites in, so the unmixed
+//! every depth). That is the space Fork It Up's Normal blending composites in, so the unmixed
 //! layer over a fill of the removed colour gives back the original pixels exactly.
 
 use photocraft_geom::Rect;

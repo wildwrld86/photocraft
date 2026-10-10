@@ -15,7 +15,7 @@
 # particular not the French localisation of Adobe Photoshop. Add entries the same way.
 # Conventions: menus are nouns (Fichier, Édition, Image ...), commands are infinitives (Ouvrir…,
 # Enregistrer sous…), sentence case. French typography: a no-break space (U+00A0) before
-# « : ; ? ! » and "%", and inside guillemets « … ». Product and technology names (PhotoCraft,
+# « : ; ? ! » and "%", and inside guillemets « … ». Product and technology names (Fork It Up,
 # ArtCraft, OpenType, Lab ...) stay as they are; RGB/CMYK read RVB/CMJN; the trailing "…" of
 # dialog commands is kept.
 	File	Fichier
@@ -696,11 +696,11 @@
 	Timeline	Montage
 	Tool Presets	Préréglages d'outils
 	Tools	Outils
-	About PhotoCraft	À propos de PhotoCraft
-	PhotoCraft Website	Site web de PhotoCraft
-	PhotoCraft on GitHub	PhotoCraft sur GitHub
-	ArtCraft Website	Site web d'ArtCraft
-	Join the ArtCraft Discord…	Rejoindre le Discord d'ArtCraft…
+	About Fork It Up	À propos de Fork It Up
+	Fork It Up Website	Site web de Fork It Up
+	Fork It Up on GitHub	Fork It Up sur GitHub
+	Upstream project (PhotoCraft)	Upstream project (PhotoCraft)
+	Join the Fork It Up community…	Join the Fork It Up community…
 	Report an Issue…	Signaler un problème…
 	WIA Support…	Prise en charge de WIA…
 	Apply	Appliquer
@@ -750,7 +750,7 @@
 	All Caps	Tout en capitales
 	All Slices	Toutes les tranches
 	All User Slices	Toutes les tranches utilisateur
-	All shortcuts reset to PhotoCraft defaults.	Tous les raccourcis ont été réinitialisés aux valeurs par défaut de PhotoCraft.
+	All shortcuts reset to Fork It Up defaults.	Tous les raccourcis ont été réinitialisés aux valeurs par défaut de Fork It Up.
 	Alt	Alt
 	Always use pressure for opacity	Toujours utiliser la pression pour l'opacité
 	Always use pressure for size	Toujours utiliser la pression pour la taille
@@ -1228,9 +1228,9 @@
 	Perspective Warp is not active	La déformation de la perspective n'est pas active
 	Perspective Warp: draw planes along the image's perspective, then switch to Warp	Déformation de la perspective : tracez des plans selon la perspective de l'image, puis passez à Déformer
 	Photo Filter	Filtre photo
-	PhotoCraft	PhotoCraft
-	PhotoCraft Manages Colors	PhotoCraft gère les couleurs
-	PhotoCraft — an open-source, native image editor written in Rust.	PhotoCraft — un éditeur d'images natif et libre, écrit en Rust.
+	Fork It Up	Fork It Up
+	Fork It Up Manages Colors	Fork It Up gère les couleurs
+	Fork It Up — an open-source, native image editor written in Rust.	Fork It Up — un éditeur d'images natif et libre, écrit en Rust.
 	Pin Depth:	Profondeur de l'épingle :
 	Pixel Length:	Longueur en pixels :
 	Pixels/Centimeter	Pixels/centimètre
@@ -1305,11 +1305,11 @@
 	Import Shortcuts…	Importer des raccourcis…
 	Load a keyboard shortcut set saved as .kys	Charger un jeu de raccourcis clavier enregistré en .kys
 	Imported {n} shortcuts from {file}. Click OK to keep them.	{n} raccourcis importés depuis {file}. Cliquez sur OK pour les conserver.
-	{n} commands are not in PhotoCraft.	{n} commandes n'existent pas dans PhotoCraft.
+	{n} commands are not in Fork It Up.	{n} commandes n'existent pas dans Fork It Up.
 	Keyboard shortcuts imported	Raccourcis clavier importés
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	Votre jeu de raccourcis clavier {set} est utilisé ici : {n} raccourcis diffèrent des valeurs par défaut. Édition › Raccourcis clavier les affiche ; Tout rétablir par défaut annule l'import.
 	Import keyboard shortcuts?	Importer les raccourcis clavier ?
-	PhotoCraft found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from PhotoCraft's. Import it?	PhotoCraft a trouvé sur cet ordinateur votre jeu de raccourcis clavier {set} provenant d'un autre éditeur d'images : {n} de ses raccourcis diffèrent de ceux de PhotoCraft. L'importer ?
+	Fork It Up found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from Fork It Up's. Import it?	Fork It Up a trouvé sur cet ordinateur votre jeu de raccourcis clavier {set} provenant d'un autre éditeur d'images : {n} de ses raccourcis diffèrent de ceux de Fork It Up. L'importer ?
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	Édition › Raccourcis clavier › Tout rétablir par défaut annule un import.
 	Don't Import	Ne pas importer
 	The keyboard shortcut set was not imported: {error}	Le jeu de raccourcis clavier n'a pas été importé : {error}
@@ -1493,7 +1493,7 @@
 	Apple Watch 45mm	Apple Watch 45 mm
 	Aqua	Aqua
 	Art & Illustration	Art et illustration
-	ArtCraft	ArtCraft
+	Upstream	Upstream
 	Background Eraser Tool	Outil Gomme d'arrière-plan
 	Bevel & Emboss	Biseau et relief
 	Blend Mode	Mode de fusion
@@ -1528,7 +1528,7 @@
 	Current Tool	Outil actif
 	Custom Shape Tool	Outil Forme personnalisée
 	Cyans	Cyans
-	Default PhotoCraft Size	Taille PhotoCraft par défaut
+	Default Fork It Up Size	Taille Fork It Up par défaut
 	Delete Workspace	Supprimer l'espace de travail
 	Diamond	Losange
 	Dimensions:	Dimensions :
@@ -1629,7 +1629,7 @@
 	Pen Tilt	Inclinaison du stylet
 	Pen Tool	Outil Plume
 	Photo	Photo
-	PhotoCraft website	Site web de PhotoCraft
+	Fork It Up website	Site web de Fork It Up
 	Picas	Picas
 	Pillow Emboss	Relief en coussin
 	Pixel Replacement	Remplacement de pixels
@@ -1945,7 +1945,7 @@
 	System Info	Informations système
 	More panels	Autres panneaux
 	More documents	Autres documents
-	These settings aren't available in PhotoCraft yet.	Ces paramètres ne sont pas encore disponibles dans PhotoCraft.
+	These settings aren't available in Fork It Up yet.	Ces paramètres ne sont pas encore disponibles dans Fork It Up.
 	Graphics	Graphismes
 	Reset GPU Backend	Réinitialiser le moteur GPU
 	Applies at next launch.	Prend effet au prochain démarrage.
@@ -2515,8 +2515,8 @@
 	Use Global Light	Utiliser la lumière globale
 	Native file drag-and-drop is unavailable	Le glisser-déposer natif de fichiers n'est pas disponible
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Le glisser-déposer natif de fichiers n'est pas encore pris en charge sous Wayland. Utilisez Fichier › Ouvrir, ou copiez l'image dans votre gestionnaire de fichiers et collez-la avec {paste}.
-	To drop files, start PhotoCraft under XWayland: `{command}`	Pour déposer des fichiers, lancez PhotoCraft sous XWayland : `{command}`
-	Or set Preferences › Performance › Linux display server to X11: PhotoCraft then always starts under XWayland.	Ou réglez Préférences › Performances › Serveur d'affichage Linux sur X11 : PhotoCraft démarre alors toujours sous XWayland.
+	To drop files, start Fork It Up under XWayland: `{command}`	Pour déposer des fichiers, lancez Fork It Up sous XWayland : `{command}`
+	Or set Preferences › Performance › Linux display server to X11: Fork It Up then always starts under XWayland.	Ou réglez Préférences › Performances › Serveur d'affichage Linux sur X11 : Fork It Up démarre alors toujours sous XWayland.
 	Edit › Paste	Édition › Coller
 	Use File › Open, or paste a copied image with {paste}.	Utilisez Fichier › Ouvrir, ou collez une image copiée avec {paste}.
 	Mixer Brush Tool	Outil Pinceau mélangeur
@@ -2531,7 +2531,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	Le mode automatique utilise l'accélération GPU lorsqu'elle est disponible et repasse au rendu CPU en cas d'erreur.
 	Switched to CPU rendering	Passage au rendu CPU
 	GPU acceleration could not continue. Your documents are unchanged.	L'accélération GPU n'a pas pu continuer. Vos documents sont intacts.
-	PhotoCraft is using the CPU image compositor. The window may still use your graphics adapter.	PhotoCraft utilise le compositeur d'images CPU. La fenêtre peut encore utiliser votre carte graphique.
+	Fork It Up is using the CPU image compositor. The window may still use your graphics adapter.	Fork It Up utilise le compositeur d'images CPU. La fenêtre peut encore utiliser votre carte graphique.
 	Retry GPU requires a restart. Save your work first.	Réessayer le GPU nécessite un redémarrage. Enregistrez votre travail au préalable.
 	Keep Using CPU	Continuer avec le CPU
 	Retry GPU	Réessayer le GPU

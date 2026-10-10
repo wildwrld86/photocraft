@@ -150,7 +150,7 @@ fn stroke_dialog_labels_are_translated_in_every_catalog() {
     }
 }
 
-/// The Stroke dialog's colour swatch opens PhotoCraft's Color Picker on the stroke colour (as in
+/// The Stroke dialog's colour swatch opens Fork It Up's Color Picker on the stroke colour (as in
 /// Photoshop), not egui's compact popup; OK sets the stroke colour, not the foreground, and the
 /// stroke is drawn in it.
 #[test]

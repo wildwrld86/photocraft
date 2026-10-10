@@ -3,8 +3,8 @@
      Installed to /usr/share/mime/packages/ (update-mime-database runs on install). -->
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="application/x-photocraft">
-    <comment>PhotoCraft document</comment>
-    <icon name="ai.storyteller.photocraft"/>
+    <comment>Fork It Up document</comment>
+    <icon name="io.github.wildwrld86.forkitup"/>
     <glob pattern="*.pcraft"/>
   </mime-type>
   <mime-type type="image/x-psb">

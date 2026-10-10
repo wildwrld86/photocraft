@@ -1,4 +1,4 @@
-//! Invert: a minimal PhotoCraft filter plug-in (plug-in ABI v1, see `docs/plugins.md`).
+//! Invert: a minimal Fork It Up filter plug-in (plug-in ABI v1, see `docs/plugins.md`).
 //!
 //! `no_std`, no allocator, no imports: the host hands us an interleaved `f32` buffer and we
 //! invert the colour channels in place, leaving alpha (and fully transparent pixels) alone,
@@ -15,8 +15,8 @@ const MANIFEST: &str = r#"{
   "name": "Invert (WebAssembly)",
   "version": "1.0.0",
   "kind": "filter",
-  "author": "PhotoCraft contributors",
-  "description": "Inverts the colour channels; an example of the PhotoCraft plug-in ABI.",
+  "author": "Fork It Up contributors",
+  "description": "Inverts the colour channels; an example of the Fork It Up plug-in ABI.",
   "params": {}
 }"#;
 

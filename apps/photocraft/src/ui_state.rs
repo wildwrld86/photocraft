@@ -1,6 +1,6 @@
 //! The saved window geometry and egui layout (`ui.ron`, written by eframe's persistence).
 //!
-//! eframe restores this state while it creates the window, before PhotoCraft's code runs, and
+//! eframe restores this state while it creates the window, before Fork It Up's code runs, and
 //! some values it does not check abort startup: a zoom factor of zero, NaN or 1e30 fails a
 //! `dpi` assertion, and a NaN or huge window size fails surface creation. A truncated or
 //! hand-edited file would then crash every launch. [`sanitize`] runs first and removes a file

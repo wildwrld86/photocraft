@@ -1,4 +1,4 @@
-# Hosting PhotoCraft for the web
+# Hosting Fork It Up for the web
 
 `photocraft-web-<version>.zip` (from the GitHub release, or `packaging/web/package.sh`) holds a
 static site in `photocraft-web-<version>/`:
@@ -107,7 +107,7 @@ hash, so they can be cached forever. Only `index.html` needs revalidation.
   `.js` files, and `no-cache` on `index.html`.
 - **HTTPS:** WebGPU (and the clipboard) only work in a secure context, which means `https://`
   or `http://localhost`. Over plain HTTP elsewhere, the app falls back to WebGL2.
-- **No special isolation headers:** PhotoCraft doesn't use `SharedArrayBuffer`, so it doesn't
+- **No special isolation headers:** Fork It Up doesn't use `SharedArrayBuffer`, so it doesn't
   need `Cross-Origin-Opener-Policy` or `Cross-Origin-Embedder-Policy`. If your site already sends
   COEP `require-corp`, also send `Cross-Origin-Resource-Policy: same-origin` (or `cross-origin`
   when the files live on a CDN) on the app's files.
@@ -166,7 +166,7 @@ fetches them with `fetch()`, so a Content Security Policy needs them allowed by 
 ```html
 <iframe
   src="https://example.com/photocraft/"
-  title="PhotoCraft image editor"
+  title="Fork It Up image editor"
   style="width: 100%; height: 720px; border: 0;"
   allow="fullscreen; clipboard-read; clipboard-write"
   allowfullscreen>
@@ -186,7 +186,7 @@ fetches them with `fetch()`, so a Content Security Policy needs them allowed by 
 
 ## Renderer selection and fallback flags
 
-PhotoCraft renders with wgpu. It uses **WebGPU** when the browser has it and falls back to
+Fork It Up renders with wgpu. It uses **WebGPU** when the browser has it and falls back to
 **WebGL2** on its own. URL query flags override this, and they work on the iframe `src` too:
 
 | Flag | Effect |

@@ -142,7 +142,7 @@ fn import_button_fills_the_dialog_and_ok_applies_the_set() {
     assert!(overrides.get("select.all").is_none(), "already the default: {overrides}");
     assert!(overrides.get("view.zoomIn").is_none(), "Cmd+= is among the keys, so the default stays: {overrides}");
     let message = field(&h, "message");
-    assert_eq!(message, json!("Imported 9 shortcuts from texcuts.kys. Click OK to keep them. 2 commands are not in PhotoCraft."));
+    assert_eq!(message, json!("Imported 9 shortcuts from texcuts.kys. Click OK to keep them. 2 commands are not in Fork It Up."));
     assert_eq!(field(&h, "capture"), json!(false));
     // Nothing is applied until OK.
     assert_eq!(crate::shortcuts::effective_shortcut(h.state(), "edit.undo", Some("Cmd+Z")).as_deref(), Some("Cmd+Shift+Z"));

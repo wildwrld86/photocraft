@@ -80,7 +80,7 @@ fn manual_and_off_kerning_round_trip_through_psd() {
 }
 
 /// #1348: the automatic mode (Metrics/Optical) lives in the document `Txt2` block, one model
-/// object per `TextIndex`. A PhotoCraft-authored PSD must carry it or a reopened layer falls
+/// object per `TextIndex`. A Fork It Up-authored PSD must carry it or a reopened layer falls
 /// back to Metrics — Optical used to be silently lost.
 #[test]
 fn optical_kerning_round_trips_through_psd() {

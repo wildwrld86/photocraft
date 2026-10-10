@@ -328,7 +328,7 @@ fn locks_and_labels_from_psd() {
 #[test]
 fn artboard_lock_round_trips_byte_for_byte() {
     // Reference files write a Background layer's locks as lspf = 0x0D (transparency + position +
-    // the bit-3 lock). PhotoCraft read the artboard lock at bit 4, so 0x0D came back as 0x05
+    // the bit-3 lock). Fork It Up read the artboard lock at bit 4, so 0x0D came back as 0x05
     // and the lock bytes drifted on every re-save.
     use photocraft_psd::TaggedBlock;
     let mut f = testgen::small(Version::Psd, Compression::Raw);

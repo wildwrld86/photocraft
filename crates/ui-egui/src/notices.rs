@@ -81,9 +81,9 @@ pub fn wayland_file_drop_guidance(app: &mut PhotocraftApp) {
     ];
     let mut args = vec![("paste".to_owned(), paste_hint(app))];
     if let Some(command) = &app.services.xwayland_command {
-        lines.push("To drop files, start PhotoCraft under XWayland: `{command}`".to_owned());
+        lines.push("To drop files, start Fork It Up under XWayland: `{command}`".to_owned());
         args.push(("command".to_owned(), command.clone()));
-        lines.push("Or set Preferences › Performance › Linux display server to X11: PhotoCraft then always starts under XWayland.".to_owned());
+        lines.push("Or set Preferences › Performance › Linux display server to X11: Fork It Up then always starts under XWayland.".to_owned());
     }
     let id = post(app, "Native file drag-and-drop is unavailable", lines, false, Some(WAYLAND_FILE_DROP_DISMISSED));
     if let Some(notice) = app.ui.notices.iter_mut().find(|notice| notice.id == id) {

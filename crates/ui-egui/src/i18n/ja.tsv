@@ -12,7 +12,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Japanese computing vocabulary (レイヤー, ぼかし, 選択範囲 ...). No proprietary localisation
 # resource, string table or product UI was consulted or copied; add entries the same way.
-# Product and technology names (PhotoCraft, ArtCraft, OpenType, CMYK, Lab ...) stay in Latin
+# Product and technology names (Fork It Up, ArtCraft, OpenType, CMYK, Lab ...) stay in Latin
 # letters; the trailing "…" of dialog commands is kept.
 
 	File	ファイル
@@ -708,11 +708,11 @@
 	Timeline	タイムライン
 	Tool Presets	ツールプリセット
 	Tools	ツール
-	About PhotoCraft	PhotoCraft について
-	PhotoCraft Website	PhotoCraft の Web サイト
-	PhotoCraft on GitHub	GitHub 上の PhotoCraft
-	ArtCraft Website	ArtCraft の Web サイト
-	Join the ArtCraft Discord…	ArtCraft の Discord に参加…
+	About Fork It Up	Fork It Up について
+	Fork It Up Website	Fork It Up の Web サイト
+	Fork It Up on GitHub	GitHub 上の Fork It Up
+	Upstream project (PhotoCraft)	Upstream project (PhotoCraft)
+	Join the Fork It Up community…	Join the Fork It Up community…
 	Report an Issue…	問題を報告…
 	WIA Support…	WIA サポート…
 	Apply	適用
@@ -764,7 +764,7 @@
 	All Caps	すべて大文字
 	All Slices	すべてのスライス
 	All User Slices	すべてのユーザースライス
-	All shortcuts reset to PhotoCraft defaults.	すべてのショートカットを初期状態に戻しました。
+	All shortcuts reset to Fork It Up defaults.	すべてのショートカットを初期状態に戻しました。
 	Alt	Alt
 	Alt-click to define a source point to clone from	Alt+クリックでコピー元を指定
 	Always use pressure for opacity	常に筆圧を不透明度に使う
@@ -1002,8 +1002,8 @@
 	Drop an image or PSD anywhere to open it.	画像や PSD をここにドロップすると開きます。
 	Native file drag-and-drop is unavailable	Wayland ではネイティブのファイルドラッグ＆ドロップを利用できません
 	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or copy the image in your file manager and paste it with {paste}.	Wayland ではネイティブのファイルドラッグ＆ドロップはまだ利用できません。[ファイル › 開く] を使うか、ファイルマネージャーで画像をコピーして {paste} で貼り付けてください。
-	To drop files, start PhotoCraft under XWayland: `{command}`	ファイルをドロップするには、XWayland 上で PhotoCraft を起動してください: `{command}`
-	Or set Preferences › Performance › Linux display server to X11: PhotoCraft then always starts under XWayland.	または 環境設定 › パフォーマンス › Linux ディスプレイサーバー を X11 にすると、PhotoCraft は常に XWayland 上で起動します。
+	To drop files, start Fork It Up under XWayland: `{command}`	ファイルをドロップするには、XWayland 上で Fork It Up を起動してください: `{command}`
+	Or set Preferences › Performance › Linux display server to X11: Fork It Up then always starts under XWayland.	または 環境設定 › パフォーマンス › Linux ディスプレイサーバー を X11 にすると、Fork It Up は常に XWayland 上で起動します。
 	Edit › Paste	[編集 › 貼り付け]
 	Duplicate Layers…	レイヤーを複製…
 	Duplicate style	スタイルを複製
@@ -1249,9 +1249,9 @@
 	Perspective Warp is not active	遠近法ワープは有効ではありません
 	Perspective Warp: draw planes along the image's perspective, then switch to Warp	遠近法ワープ: 画像の遠近に沿って面を描き、ワープに切り替えます
 	Photo Filter	写真フィルター
-	PhotoCraft	PhotoCraft
-	PhotoCraft Manages Colors	PhotoCraft でカラーを管理
-	PhotoCraft — an open-source, native image editor written in Rust.	PhotoCraft — Rust で書かれた、オープンソースのネイティブ画像エディター。
+	Fork It Up	Fork It Up
+	Fork It Up Manages Colors	Fork It Up でカラーを管理
+	Fork It Up — an open-source, native image editor written in Rust.	Fork It Up — Rust で書かれた、オープンソースのネイティブ画像エディター。
 	Pin Depth:	ピンの深さ:
 	Pixel Length:	ピクセル長:
 	Pixels/Centimeter	ピクセル/センチメートル
@@ -1325,11 +1325,11 @@
 	Import Shortcuts…	ショートカットを読み込む…
 	Load a keyboard shortcut set saved as .kys	.kys として保存されたキーボードショートカットセットを読み込みます
 	Imported {n} shortcuts from {file}. Click OK to keep them.	{file} から {n} 個のショートカットを読み込みました。OK をクリックすると保持されます。
-	{n} commands are not in PhotoCraft.	{n} 個のコマンドは PhotoCraft にありません。
+	{n} commands are not in Fork It Up.	{n} 個のコマンドは Fork It Up にありません。
 	Keyboard shortcuts imported	キーボードショートカットを読み込みました
 	Your keyboard shortcut set {set} is in use here: {n} shortcuts differ from the defaults. Edit › Keyboard Shortcuts shows them; Reset All to Defaults undoes this.	キーボードショートカットセット {set} をここで使用しています。{n} 個のショートカットが既定と異なります。編集 › キーボードショートカットで確認でき、「すべて既定に戻す」で元に戻せます。
 	Import keyboard shortcuts?	キーボードショートカットを読み込みますか？
-	PhotoCraft found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from PhotoCraft's. Import it?	このコンピューターで、別の画像編集アプリのキーボードショートカットセット {set} が見つかりました。{n} 個のショートカットが PhotoCraft と異なります。読み込みますか？
+	Fork It Up found your keyboard shortcut set {set} from another image editor on this computer: {n} of its shortcuts differ from Fork It Up's. Import it?	このコンピューターで、別の画像編集アプリのキーボードショートカットセット {set} が見つかりました。{n} 個のショートカットが Fork It Up と異なります。読み込みますか？
 	Edit › Keyboard Shortcuts › Reset All to Defaults undoes an import.	編集 › キーボードショートカット › 「すべて既定に戻す」で読み込みを元に戻せます。
 	Don't Import	読み込まない
 	The keyboard shortcut set was not imported: {error}	キーボードショートカットセットは読み込まれませんでした: {error}
@@ -1517,7 +1517,7 @@
 	Apple Watch 45mm	Apple Watch 45mm
 	Aqua	アクア
 	Art & Illustration	アート・イラスト
-	ArtCraft	ArtCraft
+	Upstream	Upstream
 	Background Eraser Tool	背景消しゴムツール
 	Bevel & Emboss	ベベルとエンボス
 	Blend Mode	描画モード
@@ -1553,7 +1553,7 @@
 	Current Tool	現在のツール
 	Custom Shape Tool	カスタムシェイプツール
 	Cyans	シアン系
-	Default PhotoCraft Size	PhotoCraft 既定サイズ
+	Default Fork It Up Size	Fork It Up 既定サイズ
 	Delete Workspace	ワークスペースを削除
 	Diamond	ダイヤモンド形
 	Dimensions:	寸法:
@@ -1654,7 +1654,7 @@
 	Pen Tilt	ペンの傾き
 	Pen Tool	ペンツール
 	Photo	写真
-	PhotoCraft website	PhotoCraft の Web サイト
+	Fork It Up website	Fork It Up の Web サイト
 	Picas	パイカ
 	Pillow Emboss	ピローエンボス
 	Pixel Replacement	ピクセルの置き換え
@@ -1982,7 +1982,7 @@
 	System Info	システム情報
 	More panels	その他のパネル
 	More documents	その他のドキュメント
-	These settings aren't available in PhotoCraft yet.	これらの設定は PhotoCraft ではまだ使用できません。
+	These settings aren't available in Fork It Up yet.	これらの設定は Fork It Up ではまだ使用できません。
 	Graphics	グラフィックス
 	Reset GPU Backend	GPU バックエンドをリセット
 	Applies at next launch.	次回の起動時に適用されます。
@@ -2089,7 +2089,7 @@
 	Automatic uses GPU acceleration when available and falls back to CPU rendering on errors.	自動モードは利用可能な場合にGPUを使用し、エラー時はCPU描画に切り替えます。
 	Switched to CPU rendering	CPU描画に切り替えました
 	GPU acceleration could not continue. Your documents are unchanged.	GPUアクセラレーションを継続できませんでした。ドキュメントは変更されていません。
-	PhotoCraft is using the CPU image compositor. The window may still use your graphics adapter.	PhotoCraftはCPUで画像を合成しています。ウィンドウは引き続きグラフィックスアダプターを使用する場合があります。
+	Fork It Up is using the CPU image compositor. The window may still use your graphics adapter.	Fork It UpはCPUで画像を合成しています。ウィンドウは引き続きグラフィックスアダプターを使用する場合があります。
 	Retry GPU requires a restart. Save your work first.	GPUの再試行には再起動が必要です。先に作業を保存してください。
 	Keep Using CPU	CPUを使い続ける
 	Retry GPU	GPUを再試行
@@ -3196,7 +3196,7 @@ fontWeight	Italic	斜体
 	Install Plug-in	プラグインをインストール
 	Intersect with	共通部分
 	Intersect with selection  (⇧⌥)	選択範囲との共通部分  (⇧⌥)
-	Join the ArtCraft Discord	ArtCraft の Discord に参加
+	Join the Fork It Up community	Join the Fork It Up community
 	Keep proportions	縦横比を固定
 	Keep view in sync	ビューを同期
 	Keeps the current texture when switching presets.	プリセットを切り替えても現在のテクスチャを維持します。
@@ -3225,7 +3225,7 @@ fontWeight	Italic	斜体
 	Mouse Controls	マウス操作
 	Mouse Coordinates	マウス座標
 	NTSC (1953)	NTSC (1953)
-	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run PhotoCraft under XWayland with `WAYLAND_DISPLAY= photocraft`.	Wayland ではネイティブのファイルのドラッグ&ドロップにまだ対応していません。ファイル › 開く を使うか、XWayland 上で `WAYLAND_DISPLAY= photocraft` として PhotoCraft を実行してください。
+	Native file drag-and-drop is not supported on Wayland yet. Use File › Open, or run Fork It Up under XWayland with `WAYLAND_DISPLAY= photocraft`.	Wayland ではネイティブのファイルのドラッグ&ドロップにまだ対応していません。ファイル › 開く を使うか、XWayland 上で `WAYLAND_DISPLAY= photocraft` として Fork It Up を実行してください。
 	New Brush	新規ブラシ
 	New Channel	新規チャンネル
 	New Layer from Brush	ブラシから新規レイヤー
