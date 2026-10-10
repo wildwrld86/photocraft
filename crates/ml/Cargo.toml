@@ -1,0 +1,29 @@
+[package]
+name = "photocraft-ml"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "PhotoCraft ML layer: model registry, on-demand model download, and matting backends (local ONNX via ort, or a remote HTTP API)"
+
+[lints]
+workspace = true
+
+[features]
+default = []
+# Local inference with ONNX Runtime (statically linked prebuilt binaries fetched by ort-sys at
+# build time) plus first-use model download. Native only: never enable for wasm32.
+onnx = ["dep:ort", "download"]
+# A remote matting endpoint (bring-your-own API / self-hosted server).
+remote = ["dep:ureq", "dep:image"]
+# HTTPS model download with SHA-256 verification.
+download = ["dep:ureq", "dep:sha2"]
+
+[dependencies]
+thiserror = { workspace = true }
+rayon = { workspace = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+ort = { version = "=2.0.0-rc.13", default-features = false, features = ["std", "download-binaries", "tls-rustls", "api-22"], optional = true }
+ureq = { version = "3", default-features = false, features = ["rustls"], optional = true }
+sha2 = { version = "0.10", optional = true }
+image = { workspace = true, features = ["png"], optional = true }

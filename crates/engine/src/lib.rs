@@ -8,6 +8,7 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 
 pub mod actions_cmds;
+pub mod ai_cmds;
 pub mod adjust_cmds;
 pub mod adjust_params;
 pub mod align_cmds;

@@ -10,6 +10,10 @@ workspace = true
 [features]
 # Real-file corpus tests (opt-in; `cargo xtask test-corpus`). Fail when the corpus is missing.
 corpus = []
+# AI commands (`ai_cmds`): local ONNX inference with first-use model download (native only).
+ml-onnx = ["photocraft-ml/onnx"]
+# AI commands through a remote HTTP provider.
+ml-remote = ["photocraft-ml/remote"]
 
 [dependencies]
 photocraft-geom = { workspace = true }
@@ -31,6 +35,8 @@ photocraft-io = { workspace = true }
 photocraft-psd = { workspace = true }
 photocraft-format = { workspace = true }
 photocraft-plugins = { workspace = true }
+# Model registry + matting backends; without features it only reports "unsupported".
+photocraft-ml = { workspace = true }
 blake3 = { version = "1.8", default-features = false, features = ["pure"] }
 photocraft-codecs = { workspace = true }
 flate2 = { workspace = true }

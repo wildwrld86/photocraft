@@ -10,6 +10,10 @@ build = "build.rs"
 # Open HEIC/HEIF photos (the optional photocraft-heif crate). Not default so distributors choose
 # it; official builds (CI, packaging/, release) build with `--features heif`.
 heif = ["photocraft-codecs/heif"]
+# AI commands (layer.removeBackgroundAI, select.subjectAI): local ONNX models downloaded on first
+# use, plus the remote HTTP provider. On by default in the fork; `--no-default-features` drops it.
+ai = ["photocraft-engine/ml-onnx", "photocraft-engine/ml-remote"]
+default = ["ai"]
 
 [lints]
 workspace = true
