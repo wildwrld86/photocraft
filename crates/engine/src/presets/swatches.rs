@@ -37,7 +37,7 @@ pub enum SwatchColor {
     Lab([f32; 3]),
     /// Black ink 0..1 (0 = white) in the gray working space, as Photoshop's K slider.
     Gray(f32),
-    /// A colour space PhotoCraft does not model (colour books and the like), kept verbatim from
+    /// A colour space Fork It Up does not model (colour books and the like), kept verbatim from
     /// an `.aco` file so it survives a round trip.
     Book { space: u16, values: [u16; 4] },
 }

@@ -71,7 +71,7 @@ const ARRAYS: &[(&str, &[&str])] = &[
 ];
 const CURVES: &[(&str, &str)] = &[("pointCurve", "Crv "), ("pointCurveRed", "CrvR"), ("pointCurveGreen", "CrvG"), ("pointCurveBlue", "CrvB")];
 
-// These controls have no PhotoCraft counterpart yet. Their observed neutral values can be
+// These controls have no Fork It Up counterpart yet. Their observed neutral values can be
 // retained in the template; active values must keep the entire filter opaque.
 const NEUTRAL_ONLY: &[(&str, i32)] = &[("LNRC", 0), ("CNRS", 50), ("MDis", 0), ("VigA", 0), ("VigM", 50), ("crfs", 100), ("TMMs", 0), ("PGTM", 0), ("RGBt", 0)];
 
@@ -222,7 +222,7 @@ fn write_number(d: &mut Descriptor, key: &str, value: &J) -> Result<(), String> 
     if !number_range(key).contains(&number) {
         return Err(format!("Camera Raw {key} is outside the supported range"));
     }
-    // PSD stores these as integer slider levels; PhotoCraft's sliders are continuous. Rounding
+    // PSD stores these as integer slider levels; Fork It Up's sliders are continuous. Rounding
     // (at most half a level) keeps the filter instead of leaving it out of the PSD.
     // Hue 360 is the same angle as 0.
     let value = match key {

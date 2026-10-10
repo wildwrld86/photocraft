@@ -1,5 +1,5 @@
 //! Affinity documents (`.af`, `.afdesign`, `.afphoto`, `.afpub`): the native layers, curves,
-//! shapes, artboards, text, images and masks `photocraft-affinity` reads, mapped to PhotoCraft
+//! shapes, artboards, text, images and masks `photocraft-affinity` reads, mapped to Fork It Up
 //! layers (groups, shape layers, type layers, embedded smart objects, pixel layers, layer and
 //! vector masks). What could not be mapped is listed in the warnings. A file whose native data
 //! can't be read opens as its embedded preview, with a warning saying why.
@@ -273,7 +273,7 @@ impl Builder {
                         gr.artboard = Some(Artboard { rect: r, background: bg, preset: String::new() });
                     }
                 } else {
-                    // PhotoCraft artboards are top-level groups: a nested one clips by a vector mask.
+                    // Fork It Up artboards are top-level groups: a nested one clips by a vector mask.
                     let p = Path::new(vec![Subpath::polygon(&[
                         (f64::from(r.x0), f64::from(r.y0)),
                         (f64::from(r.x1), f64::from(r.y0)),

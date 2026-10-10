@@ -399,7 +399,7 @@ fn persist(app: &mut PhotocraftApp, now: f64) -> Option<f64> {
                 app.ui.status = format!("Couldn't save preferences: {e}. Retrying…");
                 app.ui.status_error = true;
             } else if failures == SAVE_NOTICE_AFTER {
-                let lines = vec![e, "PhotoCraft keeps retrying; until a save succeeds, preference changes are lost when it closes.".into()];
+                let lines = vec![e, "Fork It Up keeps retrying; until a save succeeds, preference changes are lost when it closes.".into()];
                 let id = crate::notices::post(app, "Preferences can't be saved", lines, true, None);
                 app.prefs_rt.save_retry.notice = Some(id);
             }
@@ -1028,7 +1028,7 @@ fn prefs_body(ui: &mut egui::Ui, f: &mut Map<String, Value>, system: Option<egui
                     f.get("__order").and_then(|o| o.get(&section)).and_then(|v| serde_json::from_value(v.clone()).ok()).unwrap_or_default();
                 if !has_visible_fields(&values, &section) {
                     ui.add_space(4.0);
-                    ui.label(RichText::new(tl!("These settings aren't available in PhotoCraft yet.")).color(t.text_faint));
+                    ui.label(RichText::new(tl!("These settings aren't available in Fork It Up yet.")).color(t.text_faint));
                 } else if let Some(obj) = values.get_mut(&section).and_then(Value::as_object_mut) {
                     section_fields(ui, &section, obj, &order, lang, system);
                     if section == "fileHandling" {
@@ -1622,7 +1622,7 @@ fn shortcuts_body(app: &mut PhotocraftApp, ui: &mut egui::Ui, f: &mut Map<String
             }
             if ui.button(tl!("Reset All to Defaults")).clicked() {
                 overrides.clear();
-                message = tl!("All shortcuts reset to PhotoCraft defaults.").into();
+                message = tl!("All shortcuts reset to Fork It Up defaults.").into();
             }
             // A Photoshop set (`.kys`) fills the overrides; the file arrives after this frame
             // and `kys_import` writes the dialog's fields then (#1163).
@@ -2059,7 +2059,7 @@ mod tests {
         appearance_frame(&mut app, &ctx, Some(egui::Theme::Light));
         assert_palette(&ctx, ThemeKind::StudioLight);
         assert_eq!(app.session.prefs().interface.appearance_mode, AppearanceMode::Auto);
-        // A restored pin must also clear when the concrete PhotoCraft palette stays the same.
+        // A restored pin must also clear when the concrete Fork It Up palette stays the same.
         ctx.set_theme(egui::ThemePreference::Dark);
         appearance_frame(&mut app, &ctx, Some(egui::Theme::Light));
         assert_eq!(ctx.options(|o| o.theme_preference), egui::ThemePreference::System);

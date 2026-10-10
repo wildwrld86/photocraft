@@ -2,7 +2,7 @@
 //!
 //! Asserts doc-model equality where the PSD encoding is lossless, and that the re-imported
 //! document flattens to the same composite (within 1/255) in every case, so nothing a user made
-//! in PhotoCraft silently disappears or changes when Photoshop opens the file.
+//! in Fork It Up silently disappears or changes when Photoshop opens the file.
 
 mod common;
 

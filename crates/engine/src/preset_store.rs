@@ -274,7 +274,7 @@ pub fn decode_tip(bytes: &[u8]) -> Result<GrayTile, String> {
 fn decode_tip_max(bytes: &[u8], max_side: u32) -> Result<GrayTile, String> {
     let head = bytes.get(..TIP_HEADER).ok_or("truncated tip header")?;
     if &head[..6] != TIP_MAGIC {
-        return Err("not a PhotoCraft tip".into());
+        return Err("not a Fork It Up tip".into());
     }
     let bits = head[6];
     let u32_at = |i: usize| u32::from_le_bytes([head[i], head[i + 1], head[i + 2], head[i + 3]]);

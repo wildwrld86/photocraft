@@ -30,11 +30,11 @@ render "$MAC" 1024 "$DIR/photocraft-1024.png"
 # Linux hicolor theme.
 for s in 16 24 32 48 64 128 256 512; do
   mkdir -p "$DIR/hicolor/${s}x${s}/apps"
-  render "$TIGHT" "$s" "$DIR/hicolor/${s}x${s}/apps/ai.storyteller.photocraft.png"
+  render "$TIGHT" "$s" "$DIR/hicolor/${s}x${s}/apps/io.github.wildwrld86.forkitup.png"
 done
 mkdir -p "$DIR/hicolor/scalable/apps"
 # The lighter trace (photocraft-small.svg) keeps the scalable theme icon cheap to render.
-cp "$DIR/photocraft-small.svg" "$DIR/hicolor/scalable/apps/ai.storyteller.photocraft.svg"
+cp "$DIR/photocraft-small.svg" "$DIR/hicolor/scalable/apps/io.github.wildwrld86.forkitup.svg"
 
 # Windows .ico.
 ICO_PNGS=()

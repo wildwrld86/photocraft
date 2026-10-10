@@ -1,7 +1,7 @@
 //! Window › Shapes and the Custom Shape tool: vector shape presets in groups, placed as shape
 //! layers through `shape.create`.
 //!
-//! Built-in shapes were drawn from scratch for PhotoCraft in a 100 × 100 box with a small path
+//! Built-in shapes were drawn from scratch for Fork It Up in a 100 × 100 box with a small path
 //! language ([`parse`]): `M x y`, `L x y…`, `C x1 y1 x2 y2 x y…`, `Q x1 y1 x y…`, `Z`, plus `O cx cy r`
 //! (a circle) and `!` before `M`/`O` to subtract that subpath (holes). Shapes defined with Edit ›
 //! Define Custom Shape appear in a trailing "Custom Shapes" group.

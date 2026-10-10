@@ -9,9 +9,9 @@
 # Wayland, xkbcommon and Vulkan at runtime; the freedesktop runtime has all of them, and the
 # GPU driver comes from its org.freedesktop.Platform.GL extension.
 #
-# ai.storyteller.photocraft.yml (same directory) is the from-source manifest for Flathub. Keep
+# io.github.wildwrld86.forkitup.yml (same directory) is the from-source manifest for Flathub. Keep
 # runtime-version and finish-args identical in both (packaging-lint checks this).
-id: ai.storyteller.photocraft
+id: io.github.wildwrld86.forkitup
 runtime: org.freedesktop.Platform
 runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
@@ -31,7 +31,7 @@ finish-args:
   - --filesystem=xdg-pictures
   - --filesystem=xdg-documents
   # Deliberately not granted: network (the optional --control server listens on 127.0.0.1 in
-  # the sandbox; `flatpak override --user --share=network ai.storyteller.photocraft` exposes it to
+  # the sandbox; `flatpak override --user --share=network io.github.wildwrld86.forkitup` exposes it to
   # host agents) and home/host filesystem access.
 modules:
   - name: photocraft
@@ -39,11 +39,11 @@ modules:
     build-commands:
       - install -Dm755 bin/photocraft /app/bin/photocraft
       - install -Dm755 bin/photocraft-cli /app/bin/photocraft-cli
-      - install -Dm644 share/applications/ai.storyteller.photocraft.desktop /app/share/applications/ai.storyteller.photocraft.desktop
+      - install -Dm644 share/applications/io.github.wildwrld86.forkitup.desktop /app/share/applications/io.github.wildwrld86.forkitup.desktop
       # .pcraft, .psb and .qoi; the runtime's shared-mime-info already knows PSD and the rest.
-      - install -Dm644 share/mime/packages/ai.storyteller.photocraft.xml /app/share/mime/packages/ai.storyteller.photocraft.xml
+      - install -Dm644 share/mime/packages/io.github.wildwrld86.forkitup.xml /app/share/mime/packages/io.github.wildwrld86.forkitup.xml
       # Already has the release's version and date substituted by package.sh.
-      - install -Dm644 share/metainfo/ai.storyteller.photocraft.metainfo.xml /app/share/metainfo/ai.storyteller.photocraft.metainfo.xml
+      - install -Dm644 share/metainfo/io.github.wildwrld86.forkitup.metainfo.xml /app/share/metainfo/io.github.wildwrld86.forkitup.metainfo.xml
       - mkdir -p /app/share/icons /app/share/doc && cp -R share/icons/hicolor /app/share/icons/ && cp -R share/doc/photocraft /app/share/doc/
     sources:
       - type: dir

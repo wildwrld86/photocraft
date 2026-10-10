@@ -101,7 +101,7 @@ pub fn ranges_from_blend_if(b: &BlendIf, channels: usize) -> BlendingRanges {
 
 /// `lspf` bits (Adobe spec: bit 0 transparency, 1 composite, 2 position).
 /// Artboard (bit 3, `0x08`, as reference files write it) and "all" (bit 31) are undocumented.
-/// Older PhotoCraft builds wrote the artboard lock at bit 4 (`0x10`); that value is still
+/// Older Fork It Up builds wrote the artboard lock at bit 4 (`0x10`); that value is still
 /// accepted on read so those files keep their lock, and is rewritten at `0x08`.
 pub fn locks_from_lspf(v: u32) -> Locks {
     Locks { transparency: v & 1 != 0, pixels: v & 2 != 0, position: v & 4 != 0, artboard: v & 0x08 != 0 || v & 0x10 != 0, all: v & 0x8000_0000 != 0 }
@@ -793,7 +793,7 @@ mod tests {
         for bits in [0u32, 1, 2, 4, 8, 0x0D, 0x8000_0000, 0x8000_000F] {
             assert_eq!(lspf_from_locks(&locks_from_lspf(bits)), bits);
         }
-        // Older PhotoCraft files wrote the artboard lock at 0x10; it reads back as artboard
+        // Older Fork It Up files wrote the artboard lock at 0x10; it reads back as artboard
         // and is rewritten at the reference value 0x08.
         assert!(locks_from_lspf(0x10).artboard);
         assert_eq!(lspf_from_locks(&locks_from_lspf(0x10)), 0x08);

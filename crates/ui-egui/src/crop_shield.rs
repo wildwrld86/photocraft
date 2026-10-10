@@ -2,7 +2,7 @@
 //! options", #1919): whether the area outside the crop box shows at all (Show Cropped Area, H),
 //! and the shield dimming it (Enable Crop Shield: Match Canvas or a custom colour, an opacity, and
 //! Auto Adjust Opacity, which lightens it while the box is dragged). Photoshop's defaults: all on,
-//! Match Canvas, 75 %. PhotoCraft always works like Photoshop's Classic Mode, so the menu has no
+//! Match Canvas, 75 %. Fork It Up always works like Photoshop's Classic Mode, so the menu has no
 //! Use Classic Mode or Auto Center Preview.
 //!
 //! The state lives in `ToolOptions::crop_shield` ([`CropShield`]), which `ui.inspect` reports and
@@ -153,7 +153,7 @@ pub fn options_button(s: &mut CropShield, ui: &mut egui::Ui) -> bool {
     pick
 }
 
-/// Custom…: PhotoCraft's Color Picker on the custom shield colour; OK sets it
+/// Custom…: Fork It Up's Color Picker on the custom shield colour; OK sets it
 /// (`color_picker_ui::confirm`, target `cropShield`).
 pub fn pick_custom_color(app: &mut PhotocraftApp) -> u64 {
     let rgb = app.ui.tool_options.crop_shield.custom_color.map(|v| v as f32 / 255.0);

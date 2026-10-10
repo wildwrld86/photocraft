@@ -1,4 +1,4 @@
-//! Smart objects and smart filters made in PhotoCraft survive a PSD save and open (#215): the
+//! Smart objects and smart filters made in Fork It Up survive a PSD save and open (#215): the
 //! layer comes back as a live smart object (not pixels) with the same nested document (embedded
 //! in `lnk2` as a PSB), transform, filter list and filter mask, and re-renders like before.
 //!

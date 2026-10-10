@@ -1,6 +1,6 @@
 //! The part of the window the user can actually see and reach (#315).
 //!
-//! A window can be larger than its display: PhotoCraft opens at 1440 × 900 pt, which runs past
+//! A window can be larger than its display: Fork It Up opens at 1440 × 900 pt, which runs past
 //! the bottom of a 1366 × 768 screen and under the Windows taskbar. egui sizes and places menus
 //! by the window's content rect, so their last items (and their ▼ scroll arrow) were out of
 //! reach. egui doesn't expose the monitor's work area (the screen minus the taskbar or Dock), only

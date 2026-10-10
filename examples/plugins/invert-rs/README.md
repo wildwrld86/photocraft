@@ -1,4 +1,4 @@
-# Invert: an example PhotoCraft plug-in
+# Invert: an example Fork It Up plug-in
 
 A complete WebAssembly filter plug-in in about 70 lines of `no_std` Rust: no allocator, no imports,
 under 1 KiB built. It inverts the colour channels and leaves alpha alone, matching
@@ -13,7 +13,7 @@ rustup target add wasm32-unknown-unknown
 
 `build.sh` runs `cargo build --release --target wasm32-unknown-unknown` and copies the module to
 `crates/plugins/tests/fixtures/invert.wasm`, the test fixture the host's tests use. This crate is not
-a member of the PhotoCraft workspace.
+a member of the Fork It Up workspace.
 
 ## Install
 

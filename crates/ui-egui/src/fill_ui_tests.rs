@@ -172,7 +172,7 @@ fn field(h: &Harness<'_, PhotocraftApp>, id: u64, key: &str) -> Value {
     h.state().ui.dialogs.iter().find(|d| d.id == id).and_then(|d| d.fields.get(key).cloned()).unwrap_or(Value::Null)
 }
 
-/// Contents › Color… opens PhotoCraft's Color Picker on the dialog's colour (as Photoshop's Fill
+/// Contents › Color… opens Fork It Up's Color Picker on the dialog's colour (as Photoshop's Fill
 /// does), and its OK sets the Fill colour, not the foreground; Fill then fills with it.
 #[test]
 fn choosing_color_opens_the_color_picker() {

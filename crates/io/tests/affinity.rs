@@ -301,7 +301,7 @@ mod native {
             let px = |x: i32, y: i32| cache.to_interleaved(photocraft_geom::Rect::new(x, y, x + 1, y + 1));
             assert_eq!(px(30, 20), [255, 0, 0, 255]);
             assert_eq!(px(50, 40)[3], 0, "even-odd hole");
-            // Saved as a native PhotoCraft document and opened again.
+            // Saved as a native Fork It Up document and opened again.
             let saved = export(d, "copy.pcraft", &ExportOptions::default()).unwrap();
             let back = import("copy.pcraft", &saved.bytes).unwrap();
             assert_eq!(back.document.layers.len(), d.layers.len());

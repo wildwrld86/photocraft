@@ -1,5 +1,5 @@
 //! The macOS menu bar, through muda (a standalone native menu crate, not Tauri: no webview, just
-//! AppKit menus behind a safe API, no GTK on macOS). The menus themselves, their Mac layout and how their keys reach PhotoCraft are in
+//! AppKit menus behind a safe API, no GTK on macOS). The menus themselves, their Mac layout and how their keys reach Fork It Up are in
 //! `photocraft_ui_egui::native_menu`; this file only builds and updates the `NSMenu`s.
 //!
 //! - Item ids are command ids; a command in two menus (Keyboard Shortcuts is in Edit and Window)
@@ -8,7 +8,7 @@
 //!   else (labels, enabled, checked) is updated in place.
 //! - A chosen item is a click or a key equivalent: AppKit's current event says which. Key
 //!   equivalents go back to egui as the key press that was made (the event's modifiers, not the
-//!   item's: AppKit may match ⌘R to a ⇧⌘R item), so PhotoCraft's key rules still apply.
+//!   item's: AppKit may match ⌘R to a ⇧⌘R item), so Fork It Up's key rules still apply.
 //! - Hide is a custom item calling `NSApplication hide:`, as the predefined one always takes ⌘H.
 
 use std::collections::HashMap;
