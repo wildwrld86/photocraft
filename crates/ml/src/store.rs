@@ -33,7 +33,7 @@ pub fn ensure(spec: &ModelSpec, dir: Option<&Path>, allow_download: bool, progre
 }
 
 fn download(spec: &ModelSpec, part: &Path, progress: &dyn Progress) -> Result<()> {
-    let agent: ureq::Agent = ureq::Agent::config_builder().user_agent("Photocraft-dev").build().into();
+    let agent: ureq::Agent = ureq::Agent::config_builder().user_agent(crate::USER_AGENT).build().into();
     let resp = agent.get(spec.url).call().map_err(|e| MlError::Download(format!("{}: {e}", spec.url)))?;
     let mut reader = resp.into_body().into_reader();
     let mut file = fs::File::create(part).map_err(|e| MlError::Download(format!("{}: {e}", part.display())))?;

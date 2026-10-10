@@ -8,10 +8,21 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=../../assets/app-icon/photocraft.ico");
     println!("cargo:rerun-if-env-changed=PHOTOCRAFT_REQUIRE_WINRES");
+    println!("cargo:rerun-if-changed=../../FORKITUP_VERSION");
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
         return;
     }
+    // Fork It Up's own version (FORKITUP_VERSION), not the upstream workspace version.
+    let version = std::fs::read_to_string("../../FORKITUP_VERSION").unwrap_or_default().trim().to_owned();
     let mut res = winresource::WindowsResource::new();
+    if !version.is_empty() {
+        let mut n = version.split('-').next().unwrap_or("").split('.').map(|p| p.parse::<u64>().unwrap_or(0));
+        let packed = (n.next().unwrap_or(0) << 48) | (n.next().unwrap_or(0) << 32) | (n.next().unwrap_or(0) << 16);
+        res.set("ProductVersion", &version)
+            .set("FileVersion", &version)
+            .set_version_info(winresource::VersionInfo::PRODUCTVERSION, packed)
+            .set_version_info(winresource::VersionInfo::FILEVERSION, packed);
+    }
     res.set_icon("../../assets/app-icon/photocraft.ico")
         .set("ProductName", "Fork It Up")
         .set("FileDescription", "Fork It Up image editor")

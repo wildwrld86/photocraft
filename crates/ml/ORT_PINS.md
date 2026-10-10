@@ -12,7 +12,7 @@ unless its SHA-256 matches the table compiled into that exact `ort-sys` release
 | ort | 2.0.0-rc.13 | `4336a1e2b38848325241c72889086886004e589b7c74f335e60a8e8db5138a0b` |
 | ort-sys | 2.0.0-rc.13 | `cf211e3776eea6aec988552fa118dd746d70e1b1e5e244058d1c98015f3e5872` |
 
-Runtime archives used by PhotoCraft's targets (from `ort-sys` 2.0.0-rc.13 `dist.tsv`):
+Runtime archives used by Fork It Up's targets (from `ort-sys` 2.0.0-rc.13 `dist.tsv`):
 
 | Target | ort features | URL | SHA-256 |
 |---|---|---|---|

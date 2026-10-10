@@ -28,6 +28,8 @@ env:
 
 jobs:
   package:
+    # Fork It Up: nightly schedules only run upstream (manual and PR runs still work here).
+    if: github.event_name != 'schedule' || github.repository == 'storytold/photocraft'
     name: package (cross-compiled on x64)
     runs-on: windows-latest
     timeout-minutes: 90

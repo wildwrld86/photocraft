@@ -1,7 +1,10 @@
 //! Version and build provenance shared by every frontend (About dialog, `--version`).
 //!
-//! The version is the workspace version (`[workspace.package] version` in the root
-//! `Cargo.toml`, managed by `cargo xtask version`). The commit and build date are optional and
+//! Fork It Up has its own release version, kept in the root `FORKITUP_VERSION` file (one line,
+//! such as `0.1.0`). The workspace version (`[workspace.package] version` in the root
+//! `Cargo.toml`, managed by `cargo xtask version`) stays at the upstream PhotoCraft release the
+//! fork is based on, so upstream merges never conflict over it; it is [`UPSTREAM_VERSION`]. The
+//! commit and build date are optional and
 //! come from environment variables at compile time, set by CI and the packaging scripts:
 //!
 //! - `PHOTOCRAFT_BUILD_SHA`: the git commit (any length; shown shortened to 9 characters)
@@ -10,8 +13,11 @@
 //! Without them (a plain `cargo build`) the build reports itself as a dev build. Nothing here
 //! shells out to git, so builds work from a source tarball and for wasm.
 
-/// The workspace version, such as `0.1.0` or `0.2.0-rc.1`.
-pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+/// The Fork It Up release version, such as `0.1.0` or `0.2.0-rc.1` (the `FORKITUP_VERSION` file).
+pub const VERSION: &str = include_str!("../../../FORKITUP_VERSION").trim_ascii();
+
+/// The upstream PhotoCraft version this build is based on (the workspace version).
+pub const UPSTREAM_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// The full git commit this build was made from, when the build environment recorded it.
 pub fn git_sha() -> Option<&'static str> {
@@ -55,8 +61,10 @@ mod tests {
     }
 
     #[test]
-    fn version_is_the_workspace_version() {
+    fn version_is_the_fork_version() {
         assert!(!VERSION.is_empty());
+        assert!(VERSION.split(['.', '-']).take(3).all(|p| p.parse::<u32>().is_ok()), "{VERSION}");
+        assert!(!UPSTREAM_VERSION.is_empty());
         assert!(long_version().starts_with(VERSION));
         if let Some(s) = short_sha() {
             assert!(s.len() <= 9);

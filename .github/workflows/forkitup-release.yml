@@ -1,0 +1,242 @@
+# Fork It Up release builds (wildwrld86/photocraft). Adapted from upstream's release.yml, which
+# stays untouched for upstream and is guarded to run only in storytold/photocraft.
+#
+# Unsigned builds for Windows x64, macOS Apple silicon and Linux x86_64. No signing,
+# notarization, publishing or deploy steps, and no secrets are read: macOS is ad-hoc signed,
+# Windows is unsigned (packaging/windows/sign.ps1 skips without certificates).
+#
+# Triggers:
+#   workflow_dispatch   build and upload workflow artifacts only (a dry run of any branch)
+#   push of a tag forkitup-v*   the same builds, then a DRAFT GitHub Release for that tag
+#                               (never published by this workflow)
+#
+# The version comes from the root FORKITUP_VERSION file (see crates/engine/src/build_info.rs).
+name: Fork It Up release
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["forkitup-v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: forkitup-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: 1
+  PHOTOCRAFT_BUILD_SHA: ${{ github.sha }}
+  # Same embedded fonts as upstream releases (public repo, OFL/Apache fonts), pinned by commit.
+  CRAFT_FONTS_REF: abb83316d96aa59c1cf64784289e378fe9fa5695
+
+jobs:
+  version:
+    name: version
+    if: github.repository == 'wildwrld86/photocraft'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      date: ${{ steps.v.outputs.date }}
+      prerelease: ${{ steps.v.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        name: Resolve version
+        run: |
+          . packaging/env.sh
+          v="$VERSION"
+          if ! printf '%s' "$v" | grep -Eq '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'; then
+            echo "::error::FORKITUP_VERSION '$v' is not a version like 1.2.3 or 1.2.3-rc.1"
+            exit 1
+          fi
+          if [ "${GITHUB_REF_TYPE}" = tag ] && [ "${GITHUB_REF_NAME}" != "forkitup-v$v" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match FORKITUP_VERSION ($v); expected forkitup-v$v"
+            exit 1
+          fi
+          case "$v" in *-*) pre=true ;; *) pre=false ;; esac
+          {
+            echo "version=$v"
+            echo "date=$(date -u +%Y-%m-%d)"
+            echo "prerelease=$pre"
+          } >>"$GITHUB_OUTPUT"
+          echo "### Fork It Up $v (\`${GITHUB_SHA::9}\`)" >>"$GITHUB_STEP_SUMMARY"
+
+  macos:
+    name: macOS aarch64 (Apple silicon, unsigned)
+    needs: version
+    runs-on: macos-14
+    env:
+      PHOTOCRAFT_VERSION: ${{ needs.version.outputs.version }}
+      PHOTOCRAFT_BUILD_DATE: ${{ needs.version.outputs.date }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out craft-fonts (embedded fonts)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: storytold/craft-fonts
+          ref: ${{ env.CRAFT_FONTS_REF }}
+          path: craft-fonts
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: forkitup-release-macos-aarch64
+      # No import-cert.sh / notarization: MACOS_SIGN_IDENTITY stays unset, so package.sh signs
+      # ad-hoc and skips notarization with a warning.
+      - name: Build and package (ad-hoc signed DMG, CLI zip)
+        env:
+          CRAFT_FONTS_DIR: ${{ github.workspace }}/craft-fonts
+          CRAFT_FONTS_REQUIRED: "1"
+        run: packaging/macos/package.sh --arch aarch64
+      - name: Check the app
+        run: |
+          ls -l dist/release
+          bin="$(find "$CARGO_TARGET_DIR" "$PWD/target" -path '*aarch64-apple-darwin/release/photocraft-cli' -type f 2>/dev/null | head -1)"
+          if [ -n "$bin" ]; then "$bin" --version; fi
+          codesign --verify --deep --verbose=2 "$(find target -maxdepth 3 -name 'Fork It Up.app' -type d | head -1)" || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forkitup-macos-aarch64
+          path: dist/release/*
+          if-no-files-found: error
+
+  windows:
+    name: Windows x64 (unsigned)
+    needs: version
+    runs-on: windows-latest
+    env:
+      PHOTOCRAFT_VERSION: ${{ needs.version.outputs.version }}
+      PHOTOCRAFT_BUILD_DATE: ${{ needs.version.outputs.date }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out craft-fonts (embedded fonts)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: storytold/craft-fonts
+          ref: ${{ env.CRAFT_FONTS_REF }}
+          path: craft-fonts
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: forkitup-release-windows-x64
+      - name: Install WiX
+        shell: pwsh
+        run: |
+          dotnet tool install --global wix --version 5.0.2
+          wix extension add -g WixToolset.UI.wixext/5.0.2 WixToolset.Util.wixext/5.0.2
+      # No signing secrets are passed, so sign.ps1 skips signing with a warning.
+      - name: Build and package (MSI, portable zip)
+        shell: pwsh
+        env:
+          CRAFT_FONTS_DIR: ${{ github.workspace }}/craft-fonts
+          CRAFT_FONTS_REQUIRED: "1"
+        run: ./packaging/windows/package.ps1 -Arch x64
+      - name: Check the binaries
+        shell: pwsh
+        run: |
+          Get-ChildItem dist/release
+          Get-ChildItem -Recurse -Filter photocraft-cli.exe target | Select-Object -First 1 | ForEach-Object { & $_.FullName --version }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forkitup-windows-x64
+          path: dist/release/*
+          if-no-files-found: error
+
+  linux:
+    name: Linux x86_64
+    needs: version
+    # The oldest GitHub-hosted image, so the binaries only need glibc >= 2.35.
+    runs-on: ubuntu-22.04
+    env:
+      PHOTOCRAFT_VERSION: ${{ needs.version.outputs.version }}
+      PHOTOCRAFT_BUILD_DATE: ${{ needs.version.outputs.date }}
+      NFPM_VERSION: 2.47.0
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check out craft-fonts (embedded fonts)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: storytold/craft-fonts
+          ref: ${{ env.CRAFT_FONTS_REF }}
+          path: craft-fonts
+      - name: Install build and packaging tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libxkbcommon-dev libwayland-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev \
+            desktop-file-utils appstream python3-yaml zsync
+          curl -fsSL -o "$RUNNER_TEMP/nfpm.deb" \
+            "https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}/nfpm_${NFPM_VERSION}_amd64.deb"
+          sudo dpkg -i "$RUNNER_TEMP/nfpm.deb"
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: forkitup-release-linux-x86_64
+      - name: Build and package (AppImage, deb, rpm, tar.gz)
+        env:
+          CRAFT_FONTS_DIR: ${{ github.workspace }}/craft-fonts
+          CRAFT_FONTS_REQUIRED: "1"
+        run: packaging/linux/package.sh
+      - name: Check the packages
+        run: |
+          ls -l dist/release
+          dpkg-deb --info dist/release/*.deb
+          dpkg-deb --contents dist/release/*.deb | grep -E 'usr/bin/photocraft$|metainfo|applications'
+          ldd target/release/photocraft
+          python3 -c "import yaml; m = yaml.safe_load(open('packaging/linux/flatpak/io.github.wildwrld86.forkitup.yml')); assert m['id'] == 'io.github.wildwrld86.forkitup'"
+          for appimage in dist/release/*.AppImage; do
+            chmod +x "$appimage"
+            APPIMAGE_EXTRACT_AND_RUN=1 "$appimage" --version
+            "$appimage" --appimage-updateinformation | grep -F 'gh-releases-zsync|wildwrld86|photocraft|'
+            test -s "$appimage.zsync"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forkitup-linux-x86_64
+          path: dist/release/*
+          if-no-files-found: error
+
+  draft:
+    name: Draft GitHub Release (tag pushes only)
+    needs: [version, macos, windows, linux]
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'forkitup-v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+      PRERELEASE: ${{ needs.version.outputs.prerelease }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: forkitup-*
+          path: artifacts
+          merge-multiple: true
+      - name: Checksums
+        working-directory: artifacts
+        run: sha256sum -- * | tee SHA256SUMS.txt
+      - name: Create or update the draft release (never published here)
+        working-directory: artifacts
+        run: |
+          tag="$GITHUB_REF_NAME"
+          title="Fork It Up $VERSION"
+          pre=()
+          if [ "$PRERELEASE" = true ]; then pre=(--prerelease); fi
+          if draft="$(gh release view "$tag" --json isDraft --jq .isDraft 2>/dev/null)"; then
+            if [ "$draft" != "true" ]; then
+              echo "::error::Release $tag is already published; bump FORKITUP_VERSION."
+              exit 1
+            fi
+            gh release upload "$tag" --clobber -- *
+          else
+            gh release create "$tag" --draft --verify-tag --title "$title" --notes "Draft: notes to be written." "${pre[@]}" -- *
+          fi

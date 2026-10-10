@@ -36,7 +36,7 @@ case "$ARCH" in
   aarch64 | arm64) ARCH=aarch64; DEB_ARCH=arm64 ;;
   *) echo "unsupported architecture $ARCH" >&2; exit 2 ;;
 esac
-export PHOTOCRAFT_MAINTAINER="${PHOTOCRAFT_MAINTAINER:-Fork It Up maintainers <photocraft@storyteller.ai>}"
+export PHOTOCRAFT_MAINTAINER="${PHOTOCRAFT_MAINTAINER:-Fork It Up maintainers <wildwrld86@users.noreply.github.com>}"
 BASENAME="photocraft-$VERSION-linux-$ARCH"
 
 echo "==> Fork It Up $VERSION for Linux $ARCH ($FORMATS)"

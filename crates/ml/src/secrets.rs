@@ -1,6 +1,6 @@
 //! The cloud provider's API key.
 //!
-//! PhotoCraft has no OS keychain integration (the app stores no other secrets: the control-channel
+//! Fork It Up (like upstream PhotoCraft) has no OS keychain integration (the app stores no other secrets: the control-channel
 //! token is passed on the command line or in a file). So the key is kept **out of the preferences
 //! JSON** (which `prefs.get`, exports and agents can read) in its own file,
 //! `<config dir>/ai-cloud-key`, created with owner-only permissions (0600) on Unix. On Windows it

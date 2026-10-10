@@ -34,7 +34,11 @@ function Invoke-Native([string] $What, [scriptblock] $Block) {
 }
 
 # The version lives in one place: [workspace.package] version in the root Cargo.toml.
+# Fork It Up: release artifacts carry the fork's own version from FORKITUP_VERSION (see
+# crates/engine/src/build_info.rs); the workspace version stays at the upstream base.
 $Version = $env:PHOTOCRAFT_VERSION
+$ForkVersionFile = Join-Path $Root 'FORKITUP_VERSION'
+if (-not $Version -and (Test-Path $ForkVersionFile)) { $Version = (Get-Content -Raw $ForkVersionFile).Trim() }
 if (-not $Version) {
   $inPkg = $false
   foreach ($line in Get-Content (Join-Path $Root 'Cargo.toml')) {

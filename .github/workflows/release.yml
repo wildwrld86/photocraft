@@ -38,6 +38,10 @@ env:
 jobs:
   version:
     name: version
+    # Fork It Up: upstream's signed release pipeline only runs in upstream's repository; every
+    # other job needs this one, so the whole workflow skips in the fork. The fork builds with
+    # forkitup-release.yml instead.
+    if: github.repository == 'storytold/photocraft'
     runs-on: ubuntu-latest
     # No `environment: release`: this job reads no secrets, so a branch dry run can run it.
     outputs:

@@ -1,4 +1,4 @@
-//! PhotoCraft ML layer (`photocraft-ml`, L4).
+//! Fork It Up ML layer (`photocraft-ml`, L4; the crate keeps the upstream PhotoCraft prefix).
 //!
 //! Background removal / subject matting behind one trait, [`MattingBackend`], with two
 //! implementations:
@@ -16,6 +16,10 @@
 
 #[cfg(all(feature = "onnx", not(target_arch = "wasm32"), not(all(target_os = "macos", target_arch = "x86_64"))))]
 pub mod onnx;
+/// HTTP user agent for model downloads and the cloud provider.
+#[cfg(any(feature = "download", feature = "remote"))]
+pub(crate) const USER_AGENT: &str = "ForkItUp (photocraft-ml)";
+
 #[cfg(not(target_arch = "wasm32"))]
 pub mod paths;
 pub mod prep;

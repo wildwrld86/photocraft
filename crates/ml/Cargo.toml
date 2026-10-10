@@ -3,7 +3,7 @@ name = "photocraft-ml"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "PhotoCraft ML layer: model registry, on-demand model download, and matting backends (local ONNX via ort, or a remote HTTP API)"
+description = "Fork It Up ML layer: model registry, on-demand model download, and matting backends (local ONNX via ort, or a remote HTTP API)"
 
 [lints]
 workspace = true
@@ -35,7 +35,7 @@ ort = { version = "=2.0.0-rc.13", default-features = false, features = ["std", "
 ort-sys = { version = "=2.0.0-rc.13", default-features = false, optional = true }
 
 # pyke ships only DirectML-enabled Windows archives and CoreML-enabled macOS ones; these features
-# select them (PhotoCraft still registers only the CPU execution provider).
+# select them (Fork It Up still registers only the CPU execution provider).
 [target.'cfg(target_os = "windows")'.dependencies]
 ort = { version = "=2.0.0-rc.13", default-features = false, features = ["directml"], optional = true }
 [target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]

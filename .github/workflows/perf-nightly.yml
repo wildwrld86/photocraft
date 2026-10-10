@@ -35,6 +35,8 @@ env:
 
 jobs:
   perf:
+    # Fork It Up: nightly schedules only run upstream (manual and PR runs still work here).
+    if: github.event_name != 'schedule' || github.repository == 'storytold/photocraft'
     name: perf (macOS, Apple GPU)
     # Pinned image, not -latest: the machine class must stay fixed for comparisons.
     runs-on: macos-15

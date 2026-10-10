@@ -61,7 +61,7 @@ impl MattingBackend for RemoteBackend {
     fn matte(&self, img: &RgbImage, progress: &dyn Progress) -> Result<Matte> {
         progress.progress(0.2, "Uploading image");
         let body = encode_png(img)?;
-        let agent: ureq::Agent = ureq::Agent::config_builder().user_agent("Photocraft-dev").build().into();
+        let agent: ureq::Agent = ureq::Agent::config_builder().user_agent(crate::USER_AGENT).build().into();
         let mut req = agent.post(&self.url).header("Content-Type", "image/png").header("Accept", "image/png");
         if let Some(k) = &self.key {
             req = req.header("Authorization", &format!("Bearer {k}"));

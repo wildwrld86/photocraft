@@ -11,6 +11,24 @@
 > ArtCraft team, used under the MIT OR Apache-2.0 licence. It is an independent project and is not
 > made, sponsored or endorsed by the ArtCraft team. Status: early alpha.
 
+## AI background removal and Shopify presets
+
+Fork It Up adds AI tools on top of PhotoCraft:
+
+- **Layer › Remove Background (AI)** and **Select › Subject (AI)**, also in Quick Actions, the
+  CLI and the MCP server (`layer.removeBackgroundAI`, `select.subjectAI`). They run locally with
+  ONNX Runtime (DirectML on Windows, Core ML on Apple silicon, CPU elsewhere). The model
+  downloads once on first use (224 MB for the default BiRefNet-lite; the desktop app asks first)
+  and is checked against a pinned SHA-256. An optional cloud provider (your own endpoint and API key, set in Preferences › AI
+  Models) is off unless you configure it. Intel Macs have no local backend and use the cloud
+  provider only.
+- **Shopify print-on-demand presets** in [`examples/actions/`](examples/actions/): 2048 px square
+  product images on white or transparent, ready for batch runs from the CLI.
+
+Every bundled model choice allows commercial use: BiRefNet / BiRefNet-lite (MIT), IS-Net, U²-Net
+small and MODNet (Apache-2.0). See [NOTICE](NOTICE) and [ATTRIBUTION.md](ATTRIBUTION.md), and
+[`crates/ml/README.md`](crates/ml/README.md) for where models and the key file are stored.
+
 ## Features
 
 Every screenshot here is the real app at work on public-domain art, rendered offscreen through its control channel.

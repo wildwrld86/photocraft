@@ -3,7 +3,7 @@
 #
 # Exports:
 #   ROOT                    workspace root
-#   VERSION                 [workspace.package] version from Cargo.toml (override: PHOTOCRAFT_VERSION)
+#   VERSION                 the Fork It Up version from FORKITUP_VERSION (override: PHOTOCRAFT_VERSION)
 #   DIST                    output directory for release artifacts (default: $ROOT/dist/release)
 #   PHOTOCRAFT_BUILD_SHA    git commit baked into the binaries (see crates/engine/src/build_info.rs)
 #   PHOTOCRAFT_BUILD_DATE   UTC build date, YYYY-MM-DD
@@ -21,9 +21,16 @@ workspace_version() {
   ' "$ROOT/Cargo.toml"
 }
 
-VERSION="${PHOTOCRAFT_VERSION:-$(workspace_version)}"
+# Fork It Up: release artifacts carry the fork's own version (FORKITUP_VERSION, also what
+# build_info::VERSION shows); the workspace version above stays at the upstream base.
+fork_version() {
+  tr -d ' \t\r\n' < "$ROOT/FORKITUP_VERSION" 2>/dev/null || true
+}
+
+VERSION="${PHOTOCRAFT_VERSION:-$(fork_version)}"
+VERSION="${VERSION:-$(workspace_version)}"
 if [ -z "$VERSION" ]; then
-  echo "error: could not read [workspace.package] version from $ROOT/Cargo.toml" >&2
+  echo "error: could not read FORKITUP_VERSION or [workspace.package] version under $ROOT" >&2
   exit 1
 fi
 export VERSION
