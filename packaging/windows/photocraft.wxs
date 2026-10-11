@@ -81,6 +81,9 @@
 
   <Fragment>
     <ComponentGroup Id="PhotocraftFiles" Directory="INSTALLFOLDER">
+      <!-- Fork It Up: the app-local VC++ runtime DLLs package.ps1 copies next to the exes (dynamic
+           CRT, needed by the bundled ONNX Runtime). -->
+      <Files Include="$(var.BinDir)\*.dll" />
       <Component Id="PhotocraftApp" Guid="38741351-242C-448B-8E5C-A0ACC30A9B12">
         <File Id="PhotocraftExe" Source="$(var.BinDir)\photocraft.exe" KeyPath="yes">
           <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="Fork It Up"

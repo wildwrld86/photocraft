@@ -7,8 +7,11 @@
     photocraft-<version>-windows-<arch>.msi            per-machine installer (WiX v5)
     photocraft-<version>-windows-<arch>-portable.zip   photocraft.exe + photocraft-cli.exe + portable.txt
 
-  The binaries link the C runtime statically (+crt-static), so neither the MSI nor the portable
-  zip needs the Visual C++ redistributable. Signing is delegated to sign.ps1 (skipped with a
+  Fork It Up: the binaries link the C runtime dynamically, because the prebuilt ONNX Runtime
+  (AI features) is built with /MD and can't link into a +crt-static binary. The VC++ runtime DLLs
+  are deployed app-local (copied next to photocraft.exe in the MSI and the portable zip), so users
+  still don't need to install the Visual C++ redistributable. PHOTOCRAFT_STATIC_CRT=1 restores
+  upstream's static CRT (only links with --no-default-features, i.e. without the AI features). Signing is delegated to sign.ps1 (skipped with a
   warning when no signing secrets are set).
 
   Needs: Rust (MSVC toolchain + the target), the Windows SDK (rc.exe, signtool.exe),
@@ -61,10 +64,12 @@ if (-not $env:PHOTOCRAFT_BUILD_DATE) { $env:PHOTOCRAFT_BUILD_DATE = (Get-Date).T
 Write-Output "Fork It Up $Version for Windows $Arch ($Target)"
 
 if (-not $SkipBuild) {
-  # Static CRT: no VC++ redistributable needed. Scoped to the target so host build scripts and
-  # proc-macros are unaffected.
-  $flagVar = 'CARGO_TARGET_' + ($Target.ToUpper() -replace '-', '_') + '_RUSTFLAGS'
-  [Environment]::SetEnvironmentVariable($flagVar, '-C target-feature=+crt-static')
+  # Upstream links the CRT statically; the fork's ONNX Runtime needs the dynamic CRT (see above).
+  # Scoped to the target so host build scripts and proc-macros are unaffected.
+  if ($env:PHOTOCRAFT_STATIC_CRT -eq '1') {
+    $flagVar = 'CARGO_TARGET_' + ($Target.ToUpper() -replace '-', '_') + '_RUSTFLAGS'
+    [Environment]::SetEnvironmentVariable($flagVar, '-C target-feature=+crt-static')
+  }
   # Fail the build (rather than warn) if the icon/VERSIONINFO can't be embedded.
   $env:PHOTOCRAFT_REQUIRE_WINRES = '1'
   Invoke-Native "cargo build ($Target)" { cargo build --release --locked -p photocraft -p photocraft-cli --features heif --target $Target }
@@ -92,6 +97,23 @@ $Stage = Join-Path $TargetDir "windows-package\$Arch"
 Remove-Item -Recurse -Force $Stage -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path $Stage | Out-Null
 Copy-Item (Join-Path $Bin 'photocraft.exe'), (Join-Path $Bin 'photocraft-cli.exe') $Stage
+
+# App-local VC++ runtime (dynamic CRT builds): the redistributable DLLs from the Visual Studio
+# install that built the binaries (VC\Redist\MSVC\<ver>\<arch>\Microsoft.VC14x.CRT), next to the
+# exes. The MSI installs every DLL in $Stage (photocraft.wxs).
+if ($env:PHOTOCRAFT_STATIC_CRT -ne '1') {
+  $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+  $vs = & $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+  if (-not $vs) { throw 'Visual Studio with the C++ tools not found (vswhere)' }
+  $crtArch = switch ($Arch) { 'x64' { 'x64' } 'x86' { 'x86' } 'arm64' { 'arm64' } }
+  $crt = Get-ChildItem -Path (Join-Path $vs 'VC\Redist\MSVC') -Directory -Recurse -Filter 'Microsoft.VC14*.CRT' |
+    Where-Object { $_.Parent.Name -eq $crtArch -and $_.FullName -notmatch 'onecore|debug_nonredist|spectre' } |
+    Sort-Object FullName -Descending | Select-Object -First 1
+  if (-not $crt) { throw "VC++ redistributable ($crtArch) not found under $vs" }
+  Write-Output "app-local VC++ runtime from $($crt.FullName)"
+  Copy-Item (Join-Path $crt.FullName '*.dll') $Stage
+  Get-ChildItem $Stage -Filter *.dll | ForEach-Object { Write-Output "  $($_.Name)" }
+}
 
 & (Join-Path $PSScriptRoot 'sign.ps1') (Join-Path $Stage 'photocraft.exe') (Join-Path $Stage 'photocraft-cli.exe')
 
@@ -155,6 +177,7 @@ $Portable = Join-Path $TargetDir "windows-package\photocraft-$Version-windows-$A
 Remove-Item -Recurse -Force $Portable -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path $Portable | Out-Null
 Copy-Item (Join-Path $Stage '*.exe') $Portable
+Copy-Item (Join-Path $Stage '*.dll') $Portable -ErrorAction SilentlyContinue
 foreach ($f in 'README.md', 'LICENSE', 'LICENSE-MIT', 'LICENSE-APACHE') {
   $p = Join-Path $Root $f
   if (Test-Path $p) { Copy-Item $p $Portable }

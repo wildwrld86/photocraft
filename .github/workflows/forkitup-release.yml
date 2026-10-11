@@ -152,8 +152,10 @@ jobs:
   linux:
     name: Linux x86_64
     needs: version
-    # The oldest GitHub-hosted image, so the binaries only need glibc >= 2.35.
-    runs-on: ubuntu-22.04
+    # Ubuntu 24.04, not upstream's 22.04: the prebuilt ONNX Runtime that ort-sys links statically
+    # (AI features) needs glibc >= 2.38 and GCC 13's libstdc++, so it can't link on 22.04. The
+    # binaries therefore need glibc >= 2.39 (Ubuntu 24.04+, Debian 13+, Fedora 40+).
+    runs-on: ubuntu-24.04
     env:
       PHOTOCRAFT_VERSION: ${{ needs.version.outputs.version }}
       PHOTOCRAFT_BUILD_DATE: ${{ needs.version.outputs.date }}
