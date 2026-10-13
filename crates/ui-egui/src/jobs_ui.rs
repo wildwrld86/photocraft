@@ -390,9 +390,16 @@ fn on_event(app: &mut PhotocraftApp, ctx: &egui::Context, e: JobEvent) {
             app.ui.panels.brush_settings = true;
             app.ui.brush_tab = 1;
         }
-        JobOutcome::Done(_) => {
+        JobOutcome::Done(v) => {
             app.sync_views();
-            app.ui.status = e.label;
+            // A note from the command (an AI run that switched to the low-memory model): shown,
+            // but not as an error.
+            if let Some(note) = v.get("note").and_then(Value::as_str) {
+                app.ui.status = format!("{}: {note}", tl!(&e.label));
+                notices::post(app, tl!(&e.label).to_string(), vec![note.to_string()], false, None);
+            } else {
+                app.ui.status = e.label;
+            }
             app.ui.status_error = false;
         }
         JobOutcome::Failed(err) => {
@@ -466,11 +473,17 @@ pub fn bar(ui: &egui::Ui, rect: Rect, frac: Option<f32>, t: &Tokens) {
 }
 
 /// Progress that has been reported, or `None` (indeterminate) while it's still 0.
+/// A busy step (one blocking call such as AI inference) is indeterminate too, so the bar keeps
+/// moving instead of sitting at the last percentage.
 fn shown_fraction(j: &JobInfo) -> Option<f32> {
-    (j.progress > 0.0).then_some(j.progress)
+    (j.progress > 0.0 && !j.busy).then_some(j.progress)
 }
 
 fn percent(j: &JobInfo) -> String {
+    // Busy: the elapsed time instead of a percentage that wouldn't move.
+    if j.busy {
+        return elapsed(j.elapsed_ms);
+    }
     // Nothing yet reported: the bar is indeterminate, so no number.
     if j.progress > 0.0 { format!("{:.0}%", j.progress * 100.0) } else { String::new() }
 }
@@ -522,7 +535,8 @@ pub fn dialog(app: &mut PhotocraftApp, ctx: &egui::Context) {
         bar(ui, br, shown_fraction(&j), &t);
         ui.add_space(6.0);
         ui.horizontal(|ui| {
-            ui.label(RichText::new(percent(&j)).color(t.text_faint).size(11.5));
+            // Busy: the elapsed time on the right is the only number.
+            ui.label(RichText::new(if j.busy { String::new() } else { percent(&j) }).color(t.text_faint).size(11.5));
             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                 ui.label(RichText::new(elapsed(j.elapsed_ms)).color(t.text_faint).size(11.5));
             });

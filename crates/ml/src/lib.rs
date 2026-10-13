@@ -21,6 +21,8 @@ pub mod onnx;
 pub(crate) const USER_AGENT: &str = "ForkItUp (photocraft-ml)";
 
 #[cfg(not(target_arch = "wasm32"))]
+pub mod guard;
+#[cfg(not(target_arch = "wasm32"))]
 pub mod paths;
 pub mod prep;
 pub mod registry;
@@ -84,6 +86,9 @@ pub struct Matte {
 /// Progress / cancellation hooks passed down from the engine's job context.
 pub trait Progress: Sync {
     fn progress(&self, _fraction: f32, _label: &str) {}
+    /// A step with no measurable progress (one blocking inference call) starts: show it as busy
+    /// (an indeterminate bar) until the next [`Progress::progress`].
+    fn busy(&self, _label: &str) {}
     fn cancelled(&self) -> bool {
         false
     }
@@ -99,6 +104,19 @@ pub trait MattingBackend: Send + Sync {
     fn id(&self) -> String;
     /// Computes the matte at the input's resolution.
     fn matte(&self, img: &RgbImage, progress: &dyn Progress) -> Result<Matte>;
+    /// A short note about the last [`MattingBackend::matte`] for the user (not an error), e.g.
+    /// that it switched to the low-memory model.
+    fn note(&self) -> Option<String> {
+        None
+    }
+}
+
+/// Whether an inference error is ONNX Runtime running out of memory (`std::bad_alloc` is
+/// reported as "bad allocation" by MSVC and "std::bad_alloc" elsewhere).
+pub fn is_out_of_memory(e: &MlError) -> bool {
+    let MlError::Runtime(m) = e else { return false };
+    let m = m.to_ascii_lowercase();
+    ["bad allocation", "bad_alloc", "failed to allocate", "out of memory", "not enough memory", "allocation failed"].iter().any(|k| m.contains(k))
 }
 
 /// Which backend to use.
@@ -272,6 +290,16 @@ mod tests {
         assert!(model_status(Some("nope"), None).is_err());
         let p = Provider::from(&Options { model: Some("u2netp"), models_dir: Some("/tmp/x"), allow_download: true, ..Default::default() }).unwrap();
         assert!(matches!(p, Provider::Local { models_dir: Some(_), .. }));
+    }
+
+    #[test]
+    fn out_of_memory_errors_are_recognised() {
+        let daniel = "Non-zero status code returned while running Mul node. Name:'/decoder/decoder_block1/dec_att/aspp_deforms.2/atrous_conv/Mul_6' Status Message: bad allocation";
+        assert!(is_out_of_memory(&MlError::Runtime(daniel.into())));
+        assert!(is_out_of_memory(&MlError::Runtime("std::bad_alloc".into())));
+        assert!(is_out_of_memory(&MlError::Runtime("Failed to allocate memory for requested buffer of size 1073741824".into())));
+        assert!(!is_out_of_memory(&MlError::Runtime("Invalid input name".into())));
+        assert!(!is_out_of_memory(&MlError::Download("bad allocation".into())));
     }
 
     #[test]

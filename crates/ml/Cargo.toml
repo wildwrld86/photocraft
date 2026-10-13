@@ -41,6 +41,11 @@ ort = { version = "=2.0.0-rc.13", default-features = false, features = ["directm
 [target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
 ort = { version = "=2.0.0-rc.13", default-features = false, features = ["coreml"], optional = true }
 
+# Total / available physical memory for Auto's model choice (Windows GlobalMemoryStatusEx, macOS
+# host statistics) without unsafe code here; Linux reads /proc/meminfo directly. MIT.
+[target.'cfg(any(target_os = "windows", target_os = "macos"))'.dependencies]
+sysinfo = { version = "=0.39.6", default-features = false, features = ["system"] }
+
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 ureq = { version = "3", default-features = false, features = ["rustls"], optional = true }
 sha2 = { version = "0.10", optional = true }

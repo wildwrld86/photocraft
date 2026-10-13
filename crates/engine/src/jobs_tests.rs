@@ -498,3 +498,17 @@ fn an_inline_job_ctx_lets_another_thread_cancel_inline_work() {
     s.set_inline_job_ctx(None);
     s.execute("filter.blur.gaussianBlur", json!({"radius": 2})).unwrap();
 }
+
+#[test]
+fn busy_steps_are_indeterminate_until_the_next_progress() {
+    let ctx = JobCtx::new();
+    ctx.progress(0.55, "Preparing image");
+    ctx.busy("Running AI model");
+    assert!(ctx.is_busy());
+    assert_eq!(ctx.message(), "Running AI model");
+    // The fraction already reached stays (progress never goes backwards).
+    assert!((ctx.fraction() - 0.55).abs() < 1e-6);
+    ctx.progress(0.9, "Building mask");
+    assert!(!ctx.is_busy());
+    assert_eq!(ctx.message(), "Building mask");
+}

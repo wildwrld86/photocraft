@@ -38,6 +38,28 @@ to `PHOTOCRAFT_MODELS_DIR` or the platform cache dir (`~/.cache/forkitup/models`
 than BiRefNet-lite needs. BRIA RMBG-1.4 / RMBG-2.0 are **not** listed: their weights are non-commercial
 (bria-rmbg-1.4 / CC BY-NC 4.0).
 
+## Memory and low-memory machines
+
+BiRefNet resizes every image to 1024×1024 first, so its memory use is the same for a 480×640
+photo as for a 20 MP one: about 6 GB peak on the CPU (more than 5.6 GB with every session setting
+tried), which an 8 GB laptop can't provide. IS-Net peaks at about 0.8 GB.
+
+- **Auto** picks IS-Net when the machine has less than 10 GB of RAM in total, when less than the
+  model's peak + 1 GB is free (`MemAvailable` on Linux, `GlobalMemoryStatusEx` on Windows,
+  free + inactive + purgeable pages on macOS), or after an AI run crashed the app on this machine.
+- A BiRefNet run that would not fit in the free memory runs IS-Net instead, and one that fails
+  with an allocation error is retried once with IS-Net. Both are reported as a note, not an error.
+- Before each run `ai-run.inprogress` is written to the config folder and removed afterwards. If
+  the app dies during inference, the next AI run logs it to `logs/ai-crash.log` (Windows:
+  `%APPDATA%\ForkItUp\logs\ai-crash.log`), shows a note and creates `ai-low-memory`, which keeps
+  Auto on IS-Net (delete the file to undo). App panics go to `logs/crash.log`.
+- Session settings: CPU arena and memory pattern off (they raise peak memory, e.g. IS-Net 904 MB →
+  766 MB), up to 8 intra-op threads (fewer threads only made runs slower). Support overrides:
+  `PHOTOCRAFT_ML_THREADS`, `PHOTOCRAFT_ML_ARENA=1`, `PHOTOCRAFT_ML_MEM_PATTERN=1`,
+  `PHOTOCRAFT_ML_PREPACK=0`, `PHOTOCRAFT_ML_MEMORY_CHECK=0` (skip the free-memory check),
+  `PHOTOCRAFT_ML_SIMULATE_OOM=<model>` (test the fallback). Measure with
+  `cargo run --release -p photocraft-ml --features onnx --example mem_probe -- <model> [w h]`.
+
 ## Settings, cache folder and the cloud key
 
 Edit › Preferences › AI Models (`ai.*` preferences) sets the defaults the commands use: model

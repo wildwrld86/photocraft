@@ -37,6 +37,9 @@ impl photocraft_ml::Progress for Progress<'_> {
     fn progress(&self, fraction: f32, label: &str) {
         self.0.progress(fraction, label);
     }
+    fn busy(&self, label: &str) {
+        self.0.busy(label);
+    }
     fn cancelled(&self) -> bool {
         self.0.cancelled()
     }
@@ -110,6 +113,7 @@ fn make_backend(p: &Provider) -> Result<Box<dyn MattingBackend>> {
 fn make_backend(p: &Provider) -> Result<Box<dyn MattingBackend>> {
     match p {
         Provider::Local { model, .. } if model == "test:red" => Ok(Box::new(tests::RedBackend)),
+        Provider::Local { model, .. } if model == "test:fallback" => Ok(Box::new(tests::FallbackBackend)),
         _ => photocraft_ml::backend(p).map_err(ml_err),
     }
 }
@@ -166,6 +170,15 @@ fn find_subject(doc: &Document, id: Option<LayerId>, o: &Opts, ctx: &JobCtx) -> 
     Ok(region)
 }
 
+/// Adds the backend's note (e.g. "switched to the low-memory model") to a command result; the
+/// desktop app shows it in the status bar.
+fn with_note(mut v: Value, note: Option<String>) -> Value {
+    if let (Some(n), Some(o)) = (note, v.as_object_mut()) {
+        o.insert("note".into(), Value::String(n));
+    }
+    v
+}
+
 fn bounds_json(r: Rect) -> [i32; 4] {
     [r.x0, r.y0, r.width() as i32, r.height() as i32]
 }
@@ -199,7 +212,6 @@ fn remove_bg(s: &mut Session, p: &Value) -> Result<Value> {
     let doc = &s.active().ok_or(EngineError::NoDocument)?.doc;
     check(doc, doc.layer(id).ok_or(EngineError::NoLayer(id))?).map_err(EngineError::Other)?;
     let o = opts(REMOVE_BG, p, &s.prefs().ai, false)?;
-    let backend_id = o.backend.id();
     crate::jobs::edit_job(
         s,
         "Remove Background",
@@ -210,9 +222,11 @@ fn remove_bg(s: &mut Session, p: &Value) -> Result<Value> {
             let b = region.bbox;
             doc.layer_mut(id).ok_or(EngineError::NoLayer(id))?.mask = Some(LayerMask { surface: matting::region_surface(&region), ..LayerMask::reveal_all() });
             doc.selection = None;
-            Ok((b, coverage))
+            Ok((b, coverage, o.backend.id(), o.backend.note()))
         },
-        move |(b, coverage)| json!({ "layer": id.0, "bounds": bounds_json(b), "coverage": (coverage * 1000.0).round() / 1000.0, "backend": backend_id }),
+        move |(b, coverage, backend, note)| {
+            with_note(json!({ "layer": id.0, "bounds": bounds_json(b), "coverage": (coverage * 1000.0).round() / 1000.0, "backend": backend }), note)
+        },
     )
 }
 
@@ -227,7 +241,6 @@ fn select_subject(s: &mut Session, p: &Value) -> Result<Value> {
     let m = p.get("mode").and_then(Value::as_str).unwrap_or("replace");
     let mode = SelectionMode::parse(if m == "new" { "replace" } else { m });
     let o = opts(SELECT_SUBJECT, p, &s.prefs().ai, true)?;
-    let backend_id = o.backend.id();
     crate::jobs::edit_job(
         s,
         "Select Subject",
@@ -235,9 +248,9 @@ fn select_subject(s: &mut Session, p: &Value) -> Result<Value> {
             let region = find_subject(doc, active, &o, ctx)?;
             let b = region.bbox;
             doc.selection = combine_region(doc.selection.as_ref(), Some(&region), mode);
-            Ok(b)
+            Ok((b, o.backend.id(), o.backend.note()))
         },
-        move |b| json!({ "selected": true, "changed": true, "bounds": bounds_json(b), "backend": backend_id }),
+        move |(b, backend, note)| with_note(json!({ "selected": true, "changed": true, "bounds": bounds_json(b), "backend": backend }), note),
     )
 }
 
@@ -280,12 +293,12 @@ pub fn specs() -> Vec<CommandSpec> {
     let rb = concat!(
         r##"{"layer":id?,"sampleAllLayers":bool=false,"##,
         common_params!(),
-        r##"} → {layer,bounds,coverage,backend} (adds a layer mask from an AI matte; the model downloads on first use; the Background becomes a normal layer)"##
+        r##"} → {layer,bounds,coverage,backend,note?} (adds a layer mask from an AI matte; the model downloads on first use; the Background becomes a normal layer)"##
     );
     let ss = concat!(
         r##"{"sampleAllLayers":bool=true,"mode":"replace|add|subtract|intersect"="replace","##,
         common_params!(),
-        r##"} → {selected,changed,bounds,backend}"##
+        r##"} → {selected,changed,bounds,backend,note?}"##
     );
     vec![
         CommandSpec {
@@ -335,6 +348,23 @@ pub(crate) mod tests {
         }
         fn matte(&self, img: &photocraft_ml::RgbImage, _: &dyn photocraft_ml::Progress) -> std::result::Result<Matte, MlError> {
             Ok(Matte { width: img.width, height: img.height, alpha: img.px.iter().map(|p| if p[0] > p[2] + 0.2 { 1.0 } else { 0.0 }).collect() })
+        }
+    }
+
+    /// Like a BiRefNet run that switched to IS-Net: reports a busy step, then a note and a
+    /// different backend id after the run.
+    pub(crate) struct FallbackBackend;
+
+    impl MattingBackend for FallbackBackend {
+        fn id(&self) -> String {
+            "local:isnet".into()
+        }
+        fn matte(&self, img: &photocraft_ml::RgbImage, p: &dyn photocraft_ml::Progress) -> std::result::Result<Matte, MlError> {
+            p.busy("Running AI model");
+            RedBackend.matte(img, p)
+        }
+        fn note(&self) -> Option<String> {
+            Some("BiRefNet ran out of memory, so IS-Net was used instead.".into())
         }
     }
 
@@ -402,6 +432,17 @@ pub(crate) mod tests {
             s.execute("edit.undo", json!({})).unwrap();
             assert!(s.active().unwrap().doc.layer(id).unwrap().mask.is_none());
         }
+    }
+
+    #[test]
+    fn a_model_fallback_is_reported_as_a_note_not_an_error() {
+        let mut s = disc(8);
+        let r = s.execute(REMOVE_BG, json!({"model": "test:fallback"})).unwrap();
+        assert_eq!(r["backend"], "local:isnet");
+        assert!(r["note"].as_str().unwrap().contains("IS-Net"), "{r}");
+        assert!(mask_at(&s, 100, 80) > 0.9);
+        let r = s.execute(SELECT_SUBJECT, json!({"model": "test:red"})).unwrap();
+        assert!(r.get("note").is_none(), "{r}");
     }
 
     #[test]

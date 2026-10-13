@@ -67,6 +67,17 @@ pub(crate) fn paste_hint(app: &PhotocraftApp) -> String {
 /// Show the Wayland-specific fallback guidance unless the user dismissed it in preferences: winit
 /// 0.30 delivers no file drops on Wayland, so point at File › Open, pasting a copied file, and the
 /// command that starts this install under XWayland (where drops work), when there is one.
+/// An AI run ended the app last time (out of memory, most likely): say so at start-up, once.
+/// `photocraft_ml::guard` has logged it to `logs/ai-crash.log` and switched Auto to IS-Net.
+pub fn ai_crash_report(app: &mut PhotocraftApp) {
+    #[cfg(all(not(target_arch = "wasm32"), not(test)))]
+    if let Some(note) = photocraft_ml::guard::previous_crash() {
+        post(app, "Remove Background (AI)", vec![note.to_string()], false, None);
+    }
+    #[cfg(any(target_arch = "wasm32", test))]
+    let _ = app;
+}
+
 pub fn wayland_file_drop_guidance(app: &mut PhotocraftApp) {
     if !app.services.is_wayland
         || app.session.prefs().dialogs.get(WAYLAND_FILE_DROP_DISMISSED).and_then(serde_json::Value::as_bool) == Some(true)

@@ -54,6 +54,9 @@ pub const MODELS: &[ModelSpec] = &[
         mean: IMAGENET_MEAN,
         std: IMAGENET_STD,
         post: Post::Sigmoid,
+        // ~6 GB peak with the arena off (round-1 benchmark). In 0.1.1 it passed 5.6 GB with every
+        // setting tried (2 or 8 threads, prepacking off, arena on), for a 480×640 or 1920×1527
+        // image alike, so it can't run on an 8 GB machine.
         peak_mb: 6000,
     },
     ModelSpec {
@@ -83,7 +86,9 @@ pub const MODELS: &[ModelSpec] = &[
         mean: [0.5, 0.5, 0.5],
         std: [1.0, 1.0, 1.0],
         post: Post::MinMax,
-        peak_mb: 900,
+        // 0.1.1 settings (arena and memory pattern off, ≤8 threads): 766 MB peak RSS for a
+        // 480×640 image on the 16 GB test box; 904 MB with the arena and memory pattern on.
+        peak_mb: 800,
     },
     ModelSpec {
         id: "u2netp",
@@ -118,28 +123,89 @@ pub const MODELS: &[ModelSpec] = &[
 /// Fallback when the default model would not fit in memory.
 pub const LOW_MEMORY_MODEL: &str = "isnet";
 
-/// Resolves `"auto"` (or no model): the default model, unless the machine reports less free
-/// memory than it needs (plus 1 GB headroom), in which case the low-memory model. A machine that
-/// cannot report free memory gets the default.
+/// Machines with less physical memory than this (MB) get the low-memory model from Auto, whatever
+/// is free at the moment: an "8 GB" laptop reports 7–7.9 GB (less with memory reserved for an
+/// integrated GPU), and BiRefNet's peak is several GB at any image size, because every image is
+/// resized to the model's fixed 1024×1024 input first.
+pub const LOW_TOTAL_MB: u64 = 10 * 1024;
+
+/// Free memory to keep on top of a model's measured peak before running it.
+pub const HEADROOM_MB: u64 = 1024;
+
+/// Resolves `"auto"` (or no model): the default model, unless the machine is small or short on
+/// free memory (see [`auto_choice`]) or an earlier run crashed ([`crate::guard`]).
 pub fn resolve(id: Option<&str>) -> &str {
     match id {
         Some(m) if m != "auto" => m,
-        _ => match (find(DEFAULT_MODEL), available_mb()) {
-            (Ok(d), Some(free)) if free < u64::from(d.peak_mb) + 1024 => LOW_MEMORY_MODEL,
-            _ => DEFAULT_MODEL,
-        },
+        _ => auto_choice(total_mb(), available_mb(), crashed_before()),
     }
 }
 
-/// Available physical memory in MB (Linux `MemAvailable`; `None` elsewhere).
+#[cfg(not(target_arch = "wasm32"))]
+fn crashed_before() -> bool {
+    crate::guard::low_memory_flag()
+}
+#[cfg(target_arch = "wasm32")]
+fn crashed_before() -> bool {
+    false
+}
+
+/// Auto's choice from the machine's total and available memory (MB, `None` = unknown) and
+/// whether a run already crashed here.
+pub fn auto_choice(total_mb: Option<u64>, available_mb: Option<u64>, crashed_before: bool) -> &'static str {
+    let Ok(d) = find(DEFAULT_MODEL) else { return LOW_MEMORY_MODEL };
+    let small = total_mb.is_some_and(|t| t < LOW_TOTAL_MB);
+    let short = available_mb.is_some_and(|a| !fits(d, a));
+    if small || short || crashed_before { LOW_MEMORY_MODEL } else { DEFAULT_MODEL }
+}
+
+/// Whether `spec` should run with `available_mb` free (its measured peak plus headroom).
+pub fn fits(spec: &ModelSpec, available_mb: u64) -> bool {
+    available_mb >= u64::from(spec.peak_mb) + HEADROOM_MB
+}
+
+/// The model to retry with when `id` runs out of memory: the low-memory model for the BiRefNet
+/// family, nothing for models that are already small.
+pub fn fallback_for(id: &str) -> Option<&'static ModelSpec> {
+    let spec = find(id).ok()?;
+    let low = find(LOW_MEMORY_MODEL).ok()?;
+    (spec.peak_mb > low.peak_mb * 2).then_some(low)
+}
+
+/// Available physical memory in MB: `MemAvailable` on Linux, `GlobalMemoryStatusEx` on Windows,
+/// free + inactive + purgeable pages on macOS (both through `sysinfo`). `None` elsewhere.
 pub fn available_mb() -> Option<u64> {
-    if !cfg!(target_os = "linux") {
-        return None;
-    }
-    let text = std::fs::read_to_string("/proc/meminfo").ok()?;
-    let line = text.lines().find(|l| l.starts_with("MemAvailable:"))?;
-    let kb: u64 = line.split_whitespace().nth(1)?.parse().ok()?;
-    Some(kb / 1024)
+    memory().map(|m| m.1)
+}
+
+/// Total physical memory in MB (`None` where unknown).
+pub fn total_mb() -> Option<u64> {
+    memory().map(|m| m.0)
+}
+
+/// `(total, available)` in MB.
+#[cfg(target_os = "linux")]
+fn memory() -> Option<(u64, u64)> {
+    parse_meminfo(&std::fs::read_to_string("/proc/meminfo").ok()?)
+}
+
+#[cfg(any(target_os = "windows", target_os = "macos"))]
+fn memory() -> Option<(u64, u64)> {
+    use sysinfo::{MemoryRefreshKind, RefreshKind, System};
+    let s = System::new_with_specifics(RefreshKind::nothing().with_memory(MemoryRefreshKind::nothing().with_ram()));
+    let mb = |b: u64| b / (1024 * 1024);
+    (s.total_memory() > 0).then(|| (mb(s.total_memory()), mb(s.available_memory())))
+}
+
+#[cfg(not(any(target_os = "linux", target_os = "windows", target_os = "macos")))]
+fn memory() -> Option<(u64, u64)> {
+    None
+}
+
+/// `(MemTotal, MemAvailable)` in MB from `/proc/meminfo` text.
+pub fn parse_meminfo(text: &str) -> Option<(u64, u64)> {
+    let kb = |key: &str| -> Option<u64> { text.lines().find(|l| l.starts_with(key))?.split_whitespace().nth(1)?.parse().ok() };
+    Some((kb("MemTotal:")? / 1024, kb("MemAvailable:")? / 1024))
 }
 
 /// Looks a model up by id.
@@ -170,6 +236,40 @@ mod tests {
         ids.sort_unstable();
         ids.dedup();
         assert_eq!(ids.len(), MODELS.len());
+    }
+
+    #[test]
+    fn auto_picks_the_low_memory_model_on_small_or_busy_machines() {
+        // Daniel's 8 GB Vivobook: about 7.3 GB total, a few GB free.
+        assert_eq!(auto_choice(Some(7_400), Some(3_000), false), LOW_MEMORY_MODEL);
+        assert_eq!(auto_choice(Some(7_900), Some(7_500), false), LOW_MEMORY_MODEL);
+        // 16 GB with plenty free: the default; with too little free: low memory.
+        assert_eq!(auto_choice(Some(16_000), Some(12_000), false), DEFAULT_MODEL);
+        let need = u64::from(find(DEFAULT_MODEL).unwrap().peak_mb) + HEADROOM_MB;
+        assert_eq!(auto_choice(Some(16_000), Some(need - 1), false), LOW_MEMORY_MODEL);
+        assert_eq!(auto_choice(Some(16_000), Some(need), false), DEFAULT_MODEL);
+        // Unknown memory: the default, unless a run already crashed here.
+        assert_eq!(auto_choice(None, None, false), DEFAULT_MODEL);
+        assert_eq!(auto_choice(None, None, true), LOW_MEMORY_MODEL);
+        assert_eq!(auto_choice(Some(64_000), Some(60_000), true), LOW_MEMORY_MODEL);
+    }
+
+    #[test]
+    fn birefnet_falls_back_to_isnet_and_small_models_do_not() {
+        assert_eq!(fallback_for("birefnet-lite").map(|m| m.id), Some(LOW_MEMORY_MODEL));
+        assert_eq!(fallback_for("birefnet").map(|m| m.id), Some(LOW_MEMORY_MODEL));
+        assert!(fallback_for("isnet").is_none() && fallback_for("u2netp").is_none() && fallback_for("nope").is_none());
+    }
+
+    #[test]
+    fn meminfo_parses_and_this_machine_reports_memory() {
+        let t = "MemTotal:       16397536 kB\nMemFree:  100 kB\nMemAvailable:    6667264 kB\n";
+        assert_eq!(parse_meminfo(t), Some((16013, 6511)));
+        assert_eq!(parse_meminfo("MemTotal: 1 kB\n"), None);
+        if cfg!(any(target_os = "linux", target_os = "windows", target_os = "macos")) {
+            let (t, a) = (total_mb().unwrap(), available_mb().unwrap());
+            assert!(t > 0 && a <= t, "{t} {a}");
+        }
     }
 
     #[test]

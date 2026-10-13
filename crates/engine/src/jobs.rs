@@ -46,6 +46,8 @@ struct Shared {
     /// `f32` bits of the progress fraction. Non-negative floats order like their bits, so
     /// `fetch_max` keeps progress monotonic even with several reporting threads.
     progress: AtomicU32,
+    /// A step without measurable progress is running (see [`JobCtx::busy`]).
+    busy: AtomicBool,
     message: Mutex<String>,
 }
 
@@ -63,6 +65,7 @@ impl JobCtx {
     /// Report progress in `0.0..=1.0` with a short status (empty keeps the previous one).
     /// Progress never goes backwards: a lower value than already reported is ignored.
     pub fn progress(&self, fraction: f32, message: &str) {
+        self.shared.busy.store(false, Ordering::Relaxed);
         if fraction.is_finite() {
             self.shared.progress.fetch_max(fraction.clamp(0.0, 1.0).to_bits(), Ordering::Relaxed);
         }
@@ -72,6 +75,19 @@ impl JobCtx {
                 message.clone_into(&mut m);
             }
         }
+    }
+
+    /// A step whose progress can't be measured (one blocking library call) starts: the UI shows
+    /// an indeterminate bar and the elapsed time instead of a frozen percentage, until the next
+    /// [`JobCtx::progress`].
+    pub fn busy(&self, message: &str) {
+        self.progress(f32::NAN, message);
+        self.shared.busy.store(true, Ordering::Relaxed);
+    }
+
+    /// Whether a [`JobCtx::busy`] step is running.
+    pub fn is_busy(&self) -> bool {
+        self.shared.busy.load(Ordering::Relaxed)
     }
 
     /// Has the job been cancelled? Long loops check this and stop early.
@@ -143,6 +159,8 @@ pub struct JobInfo {
     /// `running`, `done`, `failed` or `cancelled`.
     pub state: &'static str,
     pub progress: f32,
+    /// A step without measurable progress is running: show an indeterminate bar.
+    pub busy: bool,
     pub message: String,
     pub elapsed_ms: f64,
     /// The command's result (done) or the error (failed).
@@ -197,6 +215,7 @@ impl Running {
             document: self.doc,
             state: "running",
             progress: self.ctx.fraction(),
+            busy: self.ctx.is_busy(),
             message: self.ctx.message(),
             elapsed_ms: now_ms() - self.started_ms,
             result: None,
